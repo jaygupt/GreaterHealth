@@ -1,0 +1,16 @@
+h1 {
+  color: blue;
+}
+
+h4 {
+  margin-bottom: 2%;
+}
+
+label {
+  margin-top: 3%;
+  display: inline-block;
+}
+
+button {
+  margin-top: 5%;
+}
