@@ -34,40 +34,38 @@ var firebaseConfig = {
 // initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// get reference to database service
-var database = firebase.database();
+var database = firebase.database(); // get reference to database service
+// const dbRef = database.ref();
+
+const userId = 22;
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
+// write to realtime-database
+function writeUserData(userId, age, city, state) {
+  database.ref('experiences/' + userId).set({
+    age: age,
+    city: city,
+    state: state
+  });
+}
+
 app.post("/add-experience", (req, res) => {
-  console.log(req.body);
+  var age = req.body.age;
+  var city = req.body.city;
+  var state = req.body.state;
+
+  // write to the firebase realtime database
+  writeUserData(userId, age, city, state);
+
   res.redirect("/");
 });
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
-
-// write to realtime-database
-// function writeUserData(userId, name, email, imageUrl) {
-//   database.ref('users/' + userId).set({
-//     username: name,
-//     email: email,
-//     profile_picture: imageUrl
-//   });
-// }
-
-// writeUserData(
-//   22, 
-//   "Jay Gupta", 
-//   "jaythegupta@gmail.com", 
-//   "https://media-exp1.licdn.com/dms/image/C4D03AQGFo3JNzPUsOw/profile-displayphoto-shrink_800_800/0/1597692097185?e=1631145600&v=beta&t=Dblhw1rSsSPLf0QTOXKvMu0P4N_EOBPdqwpjE36a9ys"
-// );
-
-// const dbRef = database.ref();
-// const userId = 22;
 
 // get data using .get()
 // dbRef.child("users").child(userId).child("username").get().then((snapshot) => {
