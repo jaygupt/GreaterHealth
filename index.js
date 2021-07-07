@@ -1,23 +1,25 @@
 // environment variables
 require('dotenv').config();
 
-// server
+// ---Server---
+
 const express = require('express');
-const app = express();
+const app = express(); // app is instance of express() method
 const port = process.env.PORT;
 
 // ---Middleware---
 
 // serve static files
 app.use(express.static('public'));
+
+// for parsing data
 app.use(express.urlencoded({extended: true}));
 
-// firebase
+// ---Firebase---
 var firebase = require("firebase/app");
 
 // Add Firebase products that will be used here
 // require("firebase/auth");
-// require("firebase/firestore");
 require("firebase/database");
 
 var firebaseConfig = {
@@ -34,11 +36,15 @@ var firebaseConfig = {
 // initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-var database = firebase.database(); // get reference to database service
+// get reference to database service
+var database = firebase.database();
+
 // const dbRef = database.ref();
 
+// define hard-coded userId (for now) for use in Firebase
 const userId = 22;
 
+// form is homepage (for now)
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
@@ -55,6 +61,7 @@ function writeUserData(userId, age, city, state, historyOfTobaccoOrSmoking, prev
   });
 }
 
+// when index.html form submitted, goes to this route
 app.post("/add-experience", (req, res) => {
   var age = req.body.age;
   var city = req.body.city;
@@ -77,6 +84,7 @@ app.post("/add-experience", (req, res) => {
     oopCost
   );
 
+  // go back to form
   res.redirect("/");
 });
 
