@@ -44,11 +44,14 @@ app.get("/", (req, res) => {
 });
 
 // write to realtime-database
-function writeUserData(userId, age, city, state) {
+function writeUserData(userId, age, city, state, historyOfTobaccoOrSmoking, previousSurgeries, oopCost) {
   database.ref('experiences/' + userId).set({
     age: age,
     city: city,
-    state: state
+    state: state,
+    historyOfTobaccoOrSmoking: historyOfTobaccoOrSmoking,
+    previousSurgeries: previousSurgeries,
+    oopCost: oopCost
   });
 }
 
@@ -56,9 +59,23 @@ app.post("/add-experience", (req, res) => {
   var age = req.body.age;
   var city = req.body.city;
   var state = req.body.state;
+  var historyOfTobaccoOrSmoking = req.body.hotuos;
+  if (!historyOfTobaccoOrSmoking) {
+    historyOfTobaccoOrSmoking = "";
+  }
+  var previousSurgeries = req.body.prevSurgeries;
+  var oopCost = req.body.oopCost;
 
   // write to the firebase realtime database
-  writeUserData(userId, age, city, state);
+  writeUserData(
+    userId, 
+    age, 
+    city, 
+    state, 
+    historyOfTobaccoOrSmoking,
+    previousSurgeries,
+    oopCost
+  );
 
   res.redirect("/");
 });
