@@ -14,14 +14,61 @@
     <label for="state">State</label><br />
     <input type="text" id="state" name="state" placeholder="California"><br />
 
-    <label for="hotuos">History of Tobacco Use or Smoking</label><br />
-    <input type="checkbox" id="hotuos" name="hotuos"><br />
+    <label for="hotuos">History of Tobacco Use or Smoking</label>
+    <br />
+    <input type="radio" id="yes" name="hotuos" value="Yes">
+    <label for="yes">Yes</label>
+    <br />
+    <input type="radio" id="no" name="hotuos" value="No">
+    <label for="no">No</label>
+    <br />
 
-    <label for="prevSurgeries">Previous Surgeries</label><br />
-    <input type="text" id="prevSurgeries" name="prevSurgeries"><br />
+    <label for="prev-surgeries">Previous Surgeries</label><br />
+    <input type="text" id="prev-surgeries" name="prev-surgeries"><br />
 
-    <label for="oopCost">Out of Pocket Cost After Insurance</label><br />
-    <input type="number" id="oopCost" name="oopCost"><br />
+    <label for="oop-cost">Out of Pocket Cost After Insurance</label><br />
+    <input type="number" id="oop-cost" name="oop-cost"><br />
+
+    <h4>Hospital Information</h4>
+    <label for="hospital-name">Name of Hospital</label><br />
+    <input type="text" id="hospital-name" name="hospital-name"><br />
+
+    <label for="hospital-city">City</label><br />
+    <input type="text" id="hospital-city" name="hospital-city" placeholder="San Francisco"><br />
+
+    <label>In or Out of Network:</label>
+    <br />
+    <input type="radio" id="in-network" name="iooon" value="in-network">
+    <label for="in-network">In-Network</label>
+    <br />
+    <input type="radio" id="out-of-network" name="iooon" value="out-of-network">
+    <label for="out-of-network">Out-of-Network</label>
+    <br />
+
+    <h4>Insurance Information</h4>
+    <label for="company-name">Name of Company</label><br />
+    <input type="text" id="company-name" name="company-name"><br />
+
+    <label>Individual or Family Network:</label>
+    <br />
+    <input type="radio" id="individual-network" name="iofn" value="Individual Network">
+    <label for="individual-network">Individual Network</label>
+    <br />
+    <input type="radio" id="family-network" name="iofn" value="Family Network">
+    <label for="family-network">Family Network</label>
+    <br />
+
+    <label for="plan-category">Plan Category</label><br />
+    <input type="text" id="plan-category" name="plan-category"><br />
+
+    <label for="premium">Premium</label><br />
+    <input type="number" id="premium" name="premium"><br />
+
+    <label for="deductible">Deductible</label><br />
+    <input type="number" id="deductible" name="deductible"><br />
+
+    <label for="copay">Copay</label><br />
+    <input type="number" id="copay" name="copay"><br />
 
     <button type="submit">Submit!</button>
   </form>
