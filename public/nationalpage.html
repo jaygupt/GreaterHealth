@@ -1,12 +1,31 @@
+<!--<link rel="stylesheet" href="./css/bootstrap.min.css">-->
 <!DOCTYPE html>
 <html>
 <head>
+  <title>National Page</title>
 
+  <!--Add Bootstrap CSS-->
+  <link rel="stylesheet" href="/bootstrapCSS/bootstrap.min.css">
+  
+  <!--Add favicon-->
+  <link rel="icon" href="favicon.png">
 </head>
 <body>
-
+  <div id="header"></div>
+  <br />
+  <div id="footer"></div>
   <footer>
   
   </footer>
+  <script src="/jQuery/jquery.js"></script> <!--Add jQuery-->
+  <script src="/bootstrapJS/bootstrap.js"></script> <!--Add Bootstrap JS-->
+
+  <!--Load in header and footer using jQuery-->
+  <script>
+    $(function() {
+      $("#header").load("header.html");
+      $("#footer").load("footer.html");
+    });
+  </script>
 </body>
 </html>

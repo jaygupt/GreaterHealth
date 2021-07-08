@@ -6,14 +6,17 @@ require('dotenv').config();
 const express = require('express');
 const app = express(); // app is instance of express() method
 const port = process.env.PORT;
+const path = require("path");
 
 // ---Middleware---
 
-// serve static files
-app.use(express.static('public'));
+// serve static files (images, CSS/JavaScript files)
+app.use(express.static('public')); // here, public is a directory containing such files
+app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
+app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
+app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
 
-// for parsing data
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true})); // for parsing data
 
 // ---Firebase---
 var firebase = require("firebase/app");
@@ -47,6 +50,10 @@ const userId = 22;
 // form is homepage (for now)
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
+});
+
+app.get("/national", (req, res) => {
+  res.sendFile(__dirname + "/public/nationalpage.html");
 });
 
 // write to realtime-database
