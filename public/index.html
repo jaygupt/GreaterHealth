@@ -1,75 +1,78 @@
-<head>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>Add Your Health Insurance Experience</h1><br />
-  <form action="/add-experience" method="POST">
-    <h4>Personal Information</h4>
-    <label for="age">Age</label><br />
-    <input type="number" id="age" name="age" placeholder="0"><br />
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>Add Your Health Insurance Experience</h1><br />
+    <form action="/add-experience" method="POST">
+      <h4>Personal Information</h4>
+      <label for="age">Age</label><br />
+      <input type="number" id="age" name="age" placeholder="0"><br />
 
-    <label for="city">City</label><br />
-    <input type="text" id="city" name="city" placeholder="San Francisco"><br />
+      <label for="city">City</label><br />
+      <input type="text" id="city" name="city" placeholder="San Francisco"><br />
 
-    <label for="state">State</label><br />
-    <input type="text" id="state" name="state" placeholder="California"><br />
+      <label for="state">State</label><br />
+      <input type="text" id="state" name="state" placeholder="California"><br />
 
-    <label for="hotuos">History of Tobacco Use or Smoking</label>
-    <br />
-    <input type="radio" id="yes" name="hotuos" value="Yes">
-    <label for="yes">Yes</label>
-    <br />
-    <input type="radio" id="no" name="hotuos" value="No">
-    <label for="no">No</label>
-    <br />
+      <label for="hotuos">History of Tobacco Use or Smoking</label>
+      <br />
+      <input type="radio" id="yes" name="hotuos" value="Yes">
+      <label for="yes">Yes</label>
+      <br />
+      <input type="radio" id="no" name="hotuos" value="No">
+      <label for="no">No</label>
+      <br />
 
-    <label for="prevSurgeries">Previous Surgeries</label><br />
-    <input type="text" id="prevSurgeries" name="prevSurgeries"><br />
+      <label for="prevSurgeries">Previous Surgeries</label><br />
+      <input type="text" id="prevSurgeries" name="prevSurgeries"><br />
 
-    <label for="oopCost">Out of Pocket Cost After Insurance</label><br />
-    <input type="number" id="oopCost" name="oopCost"><br />
+      <label for="oopCost">Out of Pocket Cost After Insurance</label><br />
+      <input type="number" id="oopCost" name="oopCost"><br />
 
-    <h4>Hospital Information</h4>
-    <label for="hospitalName">Name of Hospital</label><br />
-    <input type="text" id="hospitalName" name="hospitalName"><br />
+      <h4>Hospital Information</h4>
+      <label for="hospitalName">Name of Hospital</label><br />
+      <input type="text" id="hospitalName" name="hospitalName"><br />
 
-    <label for="hospitalCity">City</label><br />
-    <input type="text" id="hospitalCity" name="hospitalCity" placeholder="San Francisco"><br />
+      <label for="hospitalCity">City</label><br />
+      <input type="text" id="hospitalCity" name="hospitalCity" placeholder="San Francisco"><br />
 
-    <label>In or Out of Network:</label>
-    <br />
-    <input type="radio" id="in-network" name="iooon" value="In-Network">
-    <label for="in-network">In-Network</label>
-    <br />
-    <input type="radio" id="out-of-network" name="iooon" value="Out-of-Network">
-    <label for="out-of-network">Out-of-Network</label>
-    <br />
+      <label>In or Out of Network:</label>
+      <br />
+      <input type="radio" id="in-network" name="iooon" value="In-Network">
+      <label for="in-network">In-Network</label>
+      <br />
+      <input type="radio" id="out-of-network" name="iooon" value="Out-of-Network">
+      <label for="out-of-network">Out-of-Network</label>
+      <br />
 
-    <h4>Insurance Information</h4>
-    <label for="companyName">Name of Company</label><br />
-    <input type="text" id="companyName" name="companyName"><br />
+      <h4>Insurance Information</h4>
+      <label for="companyName">Name of Company</label><br />
+      <input type="text" id="companyName" name="companyName"><br />
 
-    <label>Individual or Family Network:</label>
-    <br />
-    <input type="radio" id="individual-network" name="iofn" value="Individual Network">
-    <label for="individual-network">Individual Network</label>
-    <br />
-    <input type="radio" id="family-network" name="iofn" value="Family Network">
-    <label for="family-network">Family Network</label>
-    <br />
+      <label>Individual or Family Network:</label>
+      <br />
+      <input type="radio" id="individual-network" name="iofn" value="Individual Network">
+      <label for="individual-network">Individual Network</label>
+      <br />
+      <input type="radio" id="family-network" name="iofn" value="Family Network">
+      <label for="family-network">Family Network</label>
+      <br />
 
-    <label for="planCategory">Plan Category</label><br />
-    <input type="text" id="planCategory" name="planCategory"><br />
+      <label for="planCategory">Plan Category</label><br />
+      <input type="text" id="planCategory" name="planCategory"><br />
 
-    <label for="premium">Premium</label><br />
-    <input type="number" id="premium" name="premium"><br />
+      <label for="premium">Premium</label><br />
+      <input type="number" id="premium" name="premium"><br />
 
-    <label for="deductible">Deductible</label><br />
-    <input type="number" id="deductible" name="deductible"><br />
+      <label for="deductible">Deductible</label><br />
+      <input type="number" id="deductible" name="deductible"><br />
 
-    <label for="copay">Copay</label><br />
-    <input type="number" id="copay" name="copay"><br />
+      <label for="copay">Copay</label><br />
+      <input type="number" id="copay" name="copay"><br />
 
-    <button type="submit">Submit!</button>
-  </form>
-</body>
+      <button type="submit">Submit!</button>
+    </form>
+  </body>
+</html>
