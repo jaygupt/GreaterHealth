@@ -39,7 +39,7 @@ firebase.initializeApp(firebaseConfig);
 // get reference to database service
 var database = firebase.database();
 
-// const dbRef = database.ref();
+const dbRef = database.ref();
 
 // define hard-coded userId (for now) for use in Firebase
 const userId = 22;
@@ -50,39 +50,34 @@ app.get("/", (req, res) => {
 });
 
 // write to realtime-database
-function writeUserData(userId, age, city, state, historyOfTobaccoOrSmoking, previousSurgeries, oopCost) {
+function writeUserData(userData) {
+  if (!userData.hotuos) {
+    userData.hotuos = "";
+  }
+
   database.ref('experiences/' + userId).set({
-    age: age,
-    city: city,
-    state: state,
-    historyOfTobaccoOrSmoking: historyOfTobaccoOrSmoking,
-    previousSurgeries: previousSurgeries,
-    oopCost: oopCost
+    age: userData.age,
+    city: userData.city,
+    state: userData.state,
+    hotuos: userData.hotuos,
+    prevSurgeries: userData.prevSurgeries,
+    oopCost: userData.oopCost,
+    hospitalName: userData.hospitalName,
+    hospitalCity: userData.hospitalCity,
+    iooon: userData.iooon,
+    companyName: userData.companyName,
+    iofn: userData.iofn,
+    planCategory: userData.planCategory,
+    premium: userData.premium,
+    deductible: userData.deductible,
+    copay: userData.copay
   });
 }
 
 // when index.html form submitted, goes to this route
 app.post("/add-experience", (req, res) => {
-  var age = req.body.age;
-  var city = req.body.city;
-  var state = req.body.state;
-  var historyOfTobaccoOrSmoking = req.body.hotuos;
-  if (!historyOfTobaccoOrSmoking) {
-    historyOfTobaccoOrSmoking = "";
-  }
-  var previousSurgeries = req.body.prevSurgeries;
-  var oopCost = req.body.oopCost;
-
-  // write to the firebase realtime database
-  writeUserData(
-    userId, 
-    age, 
-    city, 
-    state, 
-    historyOfTobaccoOrSmoking,
-    previousSurgeries,
-    oopCost
-  );
+  // write to the firebase realtime database one req.body JSON object
+  writeUserData(req.body);
 
   // go back to form
   res.redirect("/");
@@ -93,7 +88,7 @@ app.listen(port, () => {
 });
 
 // get data using .get()
-// dbRef.child("users").child(userId).child("username").get().then((snapshot) => {
+// dbRef.child("experiences").child(userId).get().then((snapshot) => {
 //   if (snapshot.exists()) {
 //     console.log(snapshot.val());
 //   } else {
@@ -123,7 +118,7 @@ app.listen(port, () => {
 //   }
 // });
 
-// database.ref('users/' + userId + '/email').remove((error) => {
+// database.ref(`experiences/${userId}`).remove((error) => {
 //   if (error) {
 //     console.error(error);
 //   } else {
