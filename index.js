@@ -49,11 +49,11 @@ const userId = 22;
 
 // form is homepage (for now)
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/public/nationalpage.html");
 });
 
-app.get("/national", (req, res) => {
-  res.sendFile(__dirname + "/public/nationalpage.html");
+app.get("/addExperience", (req, res) => {
+  res.sendFile(__dirname + "/public/addExperience.html");
 });
 
 // write to realtime-database
