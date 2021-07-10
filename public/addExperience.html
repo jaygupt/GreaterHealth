@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!--Add jQuery-->
+    <script src="/jQuery/jquery.js"></script> 
+
+    <!--Load in head tag content-->
+    <script>
+      $(() => {
+        $("head").load("headTag.html")
+      });
+    </script>
+
     <title>Add an Experience</title>
-
-    <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="/bootstrapCSS/bootstrap.css">
-
-    <!--Custom CSS-->
-    <link rel="stylesheet" href="styles.css">
-
-    <!--favicon-->
-    <link rel="icon" href="favicon.png">
   </head>
   <body>
     <div id="header"></div>
@@ -89,16 +90,5 @@
     <br />
 
     <div id="footer"></div>
-
-    <script src="/jQuery/jquery.js"></script> <!--Add jQuery-->
-    <script src="/bootstrapJS/bootstrap.js"></script> <!--Add Bootstrap JS-->
-
-    <!--Load in header and footer using jQuery-->
-    <script>
-      $(function() {
-        $("#header").load("header.html");
-        $("#footer").load("footer.html");
-      });
-    </script>
   </body>
 </html>
