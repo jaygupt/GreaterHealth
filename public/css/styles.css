@@ -26,3 +26,12 @@ nav {
 .contributeButton {
   text-align: center;
 }
+
+.aTable {
+  width: 80%;
+  margin: 20px auto;
+}
+
+table caption {
+  font-size: 2rem;
+}
