@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Greater Health</title>
+	<style> 
+
+		.center {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			padding: 10px;
+		}  
+	</style>
+	
+	<script src="../lib/raphael.js"></script>
+	<!-- <script src="scale.raphael.js"></script> -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+	<script src="clor.jquery.js"></script>
+	<script src="../jquery.usmap.js"></script> 
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	
+	<script>
+	$(document).ready(function() {
+	  $('#map').usmap({
+	    'stateSpecificStyles': {
+	      'AK' : {fill: '#ddd'}
+	    },
+	    'stateSpecificHoverStyles': {
+	      'HI' : {fill: '#ddd'}
+	    },
+	    
+	    'mouseoverState': {
+	      'HI' : function(event, data) {
+	        //return false;
+	      }
+	    },
+	    
+	    'click' : function(event, data) {
+	
+	    }
+	  });
+	  
+	 
+	  
+	  $('#over-md').click(function(event){
+	    $('#map').usmap('trigger', 'MD', 'mouseover', event);
+	  });
+	  
+	  $('#out-md').click(function(event){
+	    $('#map').usmap('trigger', 'MD', 'mouseout', event);
+	  });
+	});
+	</script>
+</head>
+<body class="center">
+  <div id="map" style="width: 930px; height: 630px;"></div> 
+
+  <form action="/add-experience" method="POST"> 
+    <button type="submit"> Or Contribute by Sharing Your Health Insurance Experience! </button>
+  </form> 
+</body>
+</html>
