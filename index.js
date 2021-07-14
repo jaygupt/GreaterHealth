@@ -11,7 +11,7 @@ const path = require("path");
 // ---Middleware---
 
 // serve static files (images, CSS/JavaScript files)
-app.use(express.static('public')); // here, public is a directory containing such files
+app.use(express.static(path.join(__dirname, "public"))); 
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));

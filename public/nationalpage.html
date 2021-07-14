@@ -6,8 +6,21 @@
 
     <!--Load in head tag content-->
     <script>
-      $(() => {
-        $("head").load("headTag.html")
+      $("head").load("headTag.html");
+    </script>
+
+    <!--Add Raphael-->
+    <script src="js/us-map-1.0.1/lib/raphael.js"></script>
+
+    <!--Add US Map Script-->
+    <script src="js/us-map-1.0.1/jquery.usmap.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('#usMap').usmap({
+          stateStyles: {fill: 'blue'},
+          stateHoverStyles: {fill: 'red'}
+        });
       });
     </script>
 
@@ -15,7 +28,11 @@
   </head>
   <body>
     <div id="header"></div>
-    <h1>Home</h1>
+
+    <h1 id="nationalHeader">Compare National Plans. Or State Plans.</h1>
+    <div id="usMap" style="width: 700px; height: 600px;"></div>
+    <h1>Hello World</h1>
+
     <div id="footer"></div>
   </body>
 </html>
