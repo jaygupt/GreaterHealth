@@ -22,3 +22,7 @@ label {
 nav {
   margin-bottom: 20px;
 }
+
+.contributeButton {
+  text-align: center;
+}
