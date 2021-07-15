@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <head>
+    <script src="/jQuery/jquery.js"></script>
+    <script>
+        $(() => {
+          $("head").load("headTag.html")
+        });
+      </script>
     <title>Find My Ideal Plan!</title>
-
+   
 </head>
 <body>
-    <center>
-        <form>
+    <div id="header"></div>
+    <div id="plan">
+
+    
+        <form id="findForm">
             <h1>Find My Ideal Plan</h1> <br>
             <h3>Fill out the information below, and click "Find me a Plan!" to see competitive offers in your area.</h3><br>
             <h4>Personal Information</h4>
@@ -25,5 +34,7 @@
             <br>
             <button type="submit">Find me a Plan!</button>
             </form>
-    </center> 
+    </div>
+    <div id="footer"></div>
+    
 </body>

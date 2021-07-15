@@ -56,6 +56,10 @@ app.get("/addExperience", (req, res) => {
   res.sendFile(__dirname + "/public/addExperience.html");
 });
 
+app.get("/findIdealPlan", (req, res) => {
+  res.sendFile(__dirname + "/public/findIdealPlan.html");
+});
+
 // write to realtime-database
 function writeUserData(userData) {
   if (!userData.hotuos) {
