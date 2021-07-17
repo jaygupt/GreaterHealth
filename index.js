@@ -13,6 +13,7 @@ const path = require("path");
 // serve static files (images, CSS/JavaScript files)
 app.use(express.static(path.join(__dirname, "public"))); 
 app.use("/css", express.static(path.join(__dirname, "public/css")));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use("/js", express.static(path.join(__dirname, "public/js")));
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
