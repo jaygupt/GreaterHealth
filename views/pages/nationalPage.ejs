@@ -28,7 +28,8 @@
           stateHoverStyles: {fill: 'red'},
           showLabels: true,
           click: function(event, data) {
-            console.log('You clicked: ' + stateLongName[data.name]);
+            const stateFullName = stateLongName[data.name];
+            window.location = `/states/${stateFullName}`;
           }
         });
       });

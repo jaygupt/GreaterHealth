@@ -12,6 +12,7 @@ const path = require("path");
 
 // serve static files (images, CSS/JavaScript files)
 app.use(express.static(path.join(__dirname, "public"))); 
+app.use("/css", express.static(path.join(__dirname, "public/css")));
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
@@ -57,6 +58,11 @@ const userId = 22;
 app.get("/", (req, res) => {
   // full path: views/pages/nationalPage.ejs
   res.render("pages/nationalPage");
+});
+
+app.get("/states/:stateName", (req, res) => {
+  const stateName = req.params.stateName;
+  res.render("pages/statePage", {state: stateName});
 });
 
 // Add an Experience
