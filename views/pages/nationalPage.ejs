@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/headTag', {title: 'National Page'}); %>
+
+    <link rel="stylesheet" href="/css/nationalPage.css">
+
+    <!--Add Raphael-->
+    <script src="/js/us-map-1.0.1/lib/raphael.js"></script>
+
+    <!--Add US Map Script-->
+    <script src="/js/us-map-1.0.1/jquery.usmap.js"></script>
+  
+    <script>
+      // accessing ejs variable in script
+      var stateLongName = JSON.parse('<%- JSON.stringify(stateLongName) %>');
+
+      $(document).ready(function() {
+        $('#usMap').usmap({
+          stateStyles: {fill: '#1E90FF'},
+          stateHoverStyles: {fill: 'red'},
+          showLabels: true,
+          click: function(event, data) {
+            const stateAbbreviation = data.name; 
+            const stateFullName = stateLongName[stateAbbreviation];
+            window.location = `/states/${stateFullName}`;
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
+
+    <h1 id="nationalHeader">Compare National Plans. Or State Plans.</h1>
+    <div id="usMap" style="width: 750px; height: 500px;"></div>
+
+    <!--Individual States Table-->
+    <div class="table-responsive">
+      <table class="table table-hover caption-top aTable">
+        <caption>Select an Individual State</caption>
+        <tbody>
+          <% var i = 0; %>
+          <% for (var tableRowCount = 0; tableRowCount < 10; tableRowCount++) { %>
+            <tr>
+              <% for (var tableData = 0; tableData < 5; tableData++) { %>
+                
+                <td><a href="/states/<%= longStateNames[i]; %>"><%= longStateNames[i]; %></a></td>
+                <% i++; %>
+              <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  
+    <!--National Plans Table-->
+    <div class="table-responsive">
+      <table class="table table-hover caption-top aTable">
+        <caption>National Plans</caption>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Premium</th>
+            <th scope="col">Deductible</th>
+            <th scope="col">Copay</th>
+            <th scope="col">Category</th>
+            <th scope="col">% Enrolled</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Medicaid</th>
+            <td>$200</td>
+            <td>$1,593</td>
+            <td>$25</td>
+            <td>Gold</td>
+            <td>52</td>
+          </tr>
+          <tr>
+            <th scope="row">Medicare</th>
+            <td>$280</td>
+            <td>$4,292</td>
+            <td>$10</td>
+            <td>Silver</td>
+            <td>23</td>
+          </tr>
+          <tr>
+            <th scope="row">CHIP</th>
+            <td>$150</td>
+            <td>$1,593</td>
+            <td>$23</td>
+            <td>Platinum</td>
+            <td>12</td>
+          </tr>
+        </tbody>
+      </table> 
+    </div> 
+
+    <%- include('../partials/contributeButton'); %>
+ 
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
+  </body>
+</html>

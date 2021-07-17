@@ -12,11 +12,20 @@ const path = require("path");
 
 // serve static files (images, CSS/JavaScript files)
 app.use(express.static(path.join(__dirname, "public"))); 
+app.use("/css", express.static(path.join(__dirname, "public/css")));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use("/js", express.static(path.join(__dirname, "public/js")));
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
 
 app.use(express.urlencoded({extended: true})); // for parsing data
+
+// set up views folder
+app.set('views', './views');
+
+// set view engine to ejs
+app.set('view engine', 'ejs');
 
 // ---Firebase---
 var firebase = require("firebase/app");
@@ -47,13 +56,46 @@ const dbRef = database.ref();
 // define hard-coded userId (for now) for use in Firebase
 const userId = 22;
 
-// form is homepage (for now)
+// homepage
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/nationalpage.html");
+  let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 
+      'KY' : 'Kentucky', 'LA' : 'Louisiana', 'ME' : 'Maine', 'MD' : 'Maryland', 
+      'MA' : 'Massachusetts', 'MI' : 'Michigan', 'MN' : 'Minnesota', 'MS' : 'Mississippi', 
+      'MO' : 'Missouri', 'MT' : 'Montana', 'NE' : 'Nebraska', 'NV' : 'Nevada', 'NH' : 'New Hampshire', 
+      'NJ' : 'New Jersey', 'NM' : 'New Mexico', 'NY' : 'New York', 'NC' : 'North Carolina', 
+      'ND' : 'North Dakota', 'OH' : 'Ohio', 'OK' : 'Oklahoma', 'OR' : 'Oregon', 'PA' : 'Pennsylvania', 
+      'RI' : 'Rhode Island', 'SC' : 'South Carolina', 'SD' : 'South Dakota', 'TN' : 'Tennessee', 'TX' : 'Texas', 
+      'UT' : 'Utah', 'VT' : 'Vermont', 'VA' : 'Virginia', 'WA' : 'Washington', 'WV' : 'West Virginia', 
+      'WI' : 'Wisconsin', 'WY' : 'Wyoming', 'DC' : 'Washngton DC' };
+
+  // longStateNames will be array of the values of stateLongName JSON object
+  let longStateNames = [];
+  for(let key of Object.keys(stateLongName)) {
+    longStateNames.push(stateLongName[key]);
+  }
+
+  // full path: views/pages/nationalPage.ejs
+  res.render("pages/nationalPage", {stateLongName: stateLongName, longStateNames: longStateNames});
 });
 
+app.get("/states/:stateName", (req, res) => {
+  const stateName = req.params.stateName;
+  res.render("pages/statePage", {state: stateName});
+});
+
+// Add an Experience
 app.get("/addExperience", (req, res) => {
-  res.sendFile(__dirname + "/public/addExperience.html");
+  // full path: views/pages/addExperience.ejs
+  res.render("pages/addExperience");
+});
+
+// when index.html form submitted, goes to this route
+app.post("/addExperience", (req, res) => {
+  // write to the firebase realtime database one req.body JSON object
+  writeUserData(req.body);
+
+  // go back to form
+  res.redirect("/");
 });
 
 app.get("/findIdealPlan", (req, res) => {
@@ -85,54 +127,6 @@ function writeUserData(userData) {
   });
 }
 
-// when index.html form submitted, goes to this route
-app.post("/add-experience", (req, res) => {
-  // write to the firebase realtime database one req.body JSON object
-  writeUserData(req.body);
-
-  // go back to form
-  res.redirect("/");
-});
-
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
-
-// get data using .get()
-// dbRef.child("experiences").child(userId).get().then((snapshot) => {
-//   if (snapshot.exists()) {
-//     console.log(snapshot.val());
-//   } else {
-//     console.log("No data available");
-//   }
-// }).catch((error) => {
-//   console.error(error);
-// });
-
-// get data with .on()
-// var usernameRef = database.ref('users/' + userId + '/username');
-// usernameRef.on('value', (snapshot) => {
-//   const data = snapshot.val();
-//   console.log(data);
-// });
-
-// update the data
-// var updates = {
-//   email: "sidthesloth@yahoo.com"
-// };
-
-// database.ref('users/' + userId).update(updates, (error) => {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log("Successfully Updated!");
-//   }
-// });
-
-// database.ref(`experiences/${userId}`).remove((error) => {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log("Successfully Deleted")
-//   }
-// });
