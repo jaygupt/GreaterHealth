@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/headTag', {title: "Find My Ideal Plan"}); %>
+    <link rel="stylesheet" href="/css/findIdealPlan.css">
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
+
+    <h1>Find My Ideal Plan</h1>
+    <h3>Fill out the information below, and click "Find me a Plan!" to see competitive offers in your area.</h3>
+    <form method="POST">
+      <h4>Personal Information</h4>
+      <label for="age">Age</label><br />
+      <input type="number" id="age" name="age" placeholder="0"><br />
+
+      <label for="city">City</label><br />
+      <input type="text" id="city" name="city" placeholder="San Francisco"><br />
+
+      <label for="state">State</label><br />
+      <input type="text" id="state" name="state" placeholder="California"><br />
+
+      <label for="hotuos">History of Tobacco Use or Smoking</label>
+      <br />
+      <input type="radio" id="yes" name="hotuos" value="Yes">
+      <label for="yes">Yes</label>
+      <br />
+      <input type="radio" id="no" name="hotuos" value="No">
+      <label for="no">No</label>
+      <br />
+
+      <label for="surgeryOrMedNeeded">Surgery/Medication Needed</label><br />
+      <input type="text" id="surgeryOrMedNeeded" name="surgeryOrMedNeeded"><br />
+
+      <label for="individualOrFamilyEnrollment">Individual or Family Enrollment</label>
+      <br />
+      <input type="radio" id="individual" name="individualOrFamilyEnrollment" value="Individual">
+      <label for="individual">Individual</label>
+      <br />
+      <input type="radio" id="family" name="individualOrFamilyEnrollment" value="Family">
+      <label for="family">Family</label>
+      <br />
+
+      <button class="btn btn-success" type="submit">Find me a Plan!</button>
+    </form>
+
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
+  </body>
+</html>

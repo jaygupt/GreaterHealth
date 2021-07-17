@@ -98,8 +98,9 @@ app.post("/addExperience", (req, res) => {
   res.redirect("/");
 });
 
+// Find my Ideal Plan
 app.get("/findIdealPlan", (req, res) => {
-  res.sendFile(__dirname + "/public/findIdealPlan.html");
+  res.render("pages/findIdealPlan");
 });
 
 // write to realtime-database
