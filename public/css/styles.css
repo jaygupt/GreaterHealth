@@ -1,3 +1,7 @@
+#brandImage {
+  margin-right: 2px;
+}
+
 button {
   margin-top: 25px;
 }
@@ -29,6 +33,7 @@ label {
 
 nav {
   margin-bottom: 20px;
+  padding: .5rem 1rem;
 }
 
 .contributeButton {
