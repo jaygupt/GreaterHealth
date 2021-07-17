@@ -8,14 +8,29 @@
       GreaterHealth
     </a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home</a>
+      <li class="nav-item">
+        <a 
+          class="nav-link 
+          <%= pageName === 'home' && 'active' %>"
+          href="/">
+          Home
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/addExperience">Add an Experience</a>
+        <a 
+          class="nav-link 
+          <%= pageName === 'addExperience' && 'active' %>"
+          href="/addExperience">
+          Add an Experience
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/findIdealPlan">Find my Ideal Plan</a>
+        <a 
+          class="nav-link 
+          <%= pageName === 'findIdealPlan' && 'active' %>"
+          href="/findIdealPlan">
+          Find my Ideal Plan
+        </a>
       </li>
   </div>
 </nav>

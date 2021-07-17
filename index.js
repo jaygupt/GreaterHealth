@@ -75,7 +75,11 @@ app.get("/", (req, res) => {
   }
 
   // full path: views/pages/nationalPage.ejs
-  res.render("pages/nationalPage", {stateLongName: stateLongName, longStateNames: longStateNames});
+  res.render("pages/nationalPage", {
+    stateLongName: stateLongName, 
+    longStateNames: longStateNames,
+    pageName: "home"
+  });
 });
 
 app.get("/states/:stateName", (req, res) => {
@@ -86,7 +90,7 @@ app.get("/states/:stateName", (req, res) => {
 // Add an Experience
 app.get("/addExperience", (req, res) => {
   // full path: views/pages/addExperience.ejs
-  res.render("pages/addExperience");
+  res.render("pages/addExperience", {pageName: "addExperience"});
 });
 
 // when index.html form submitted, goes to this route
@@ -100,7 +104,7 @@ app.post("/addExperience", (req, res) => {
 
 // Find my Ideal Plan
 app.get("/findIdealPlan", (req, res) => {
-  res.render("pages/findIdealPlan");
+  res.render("pages/findIdealPlan", {pageName: "findIdealPlan"});
 });
 
 // write to realtime-database
