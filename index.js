@@ -56,9 +56,7 @@ const dbRef = database.ref();
 // define hard-coded userId (for now) for use in Firebase
 const userId = 22;
 
-// homepage
-app.get("/", (req, res) => {
-  let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 
+let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 
       'KY' : 'Kentucky', 'LA' : 'Louisiana', 'ME' : 'Maine', 'MD' : 'Maryland', 
       'MA' : 'Massachusetts', 'MI' : 'Michigan', 'MN' : 'Minnesota', 'MS' : 'Mississippi', 
       'MO' : 'Missouri', 'MT' : 'Montana', 'NE' : 'Nebraska', 'NV' : 'Nevada', 'NH' : 'New Hampshire', 
@@ -66,14 +64,16 @@ app.get("/", (req, res) => {
       'ND' : 'North Dakota', 'OH' : 'Ohio', 'OK' : 'Oklahoma', 'OR' : 'Oregon', 'PA' : 'Pennsylvania', 
       'RI' : 'Rhode Island', 'SC' : 'South Carolina', 'SD' : 'South Dakota', 'TN' : 'Tennessee', 'TX' : 'Texas', 
       'UT' : 'Utah', 'VT' : 'Vermont', 'VA' : 'Virginia', 'WA' : 'Washington', 'WV' : 'West Virginia', 
-      'WI' : 'Wisconsin', 'WY' : 'Wyoming', 'DC' : 'Washngton DC' };
+      'WI' : 'Wisconsin', 'WY' : 'Wyoming'};
 
-  // longStateNames will be array of the values of stateLongName JSON object
-  let longStateNames = [];
-  for(let key of Object.keys(stateLongName)) {
-    longStateNames.push(stateLongName[key]);
-  }
+// longStateNames will be array of the values of stateLongName JSON object
+let longStateNames = [];
+for(let key of Object.keys(stateLongName)) {
+  longStateNames.push(stateLongName[key]);
+}
 
+// homepage
+app.get("/", (req, res) => {
   // full path: views/pages/nationalPage.ejs
   res.render("pages/nationalPage", {
     stateLongName: stateLongName, 
@@ -82,18 +82,32 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/states/:stateName", (req, res) => {
-  const stateName = req.params.stateName;
-  res.render("pages/statePage", {
-    state: stateName,
-    pageName: ""
-  });
-});
-
 // Add an Experience
 app.get("/addExperience", (req, res) => {
   // full path: views/pages/addExperience.ejs
-  res.render("pages/addExperience", {pageName: "addExperience"});
+  res.render("pages/addExperience", {
+    pageName: "addExperience",
+    longStateNames: longStateNames
+  });
+});
+
+// Find my Ideal Plan
+app.get("/findIdealPlan", (req, res) => {
+  res.render("pages/findIdealPlan", {
+    pageName: "findIdealPlan",
+    longStateNames: longStateNames
+  });
+});
+
+// Individual State Page
+app.get("/states/:stateName", (req, res) => {
+  const stateName = req.params.stateName;
+  
+  res.render("pages/statePage", {
+    state: stateName,
+    longStateNames: longStateNames,
+    pageName: "state"
+  });
 });
 
 // when index.html form submitted, goes to this route
@@ -103,11 +117,6 @@ app.post("/addExperience", (req, res) => {
 
   // go back to form
   res.redirect("/");
-});
-
-// Find my Ideal Plan
-app.get("/findIdealPlan", (req, res) => {
-  res.render("pages/findIdealPlan", {pageName: "findIdealPlan"});
 });
 
 // write to realtime-database

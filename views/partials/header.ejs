@@ -32,5 +32,22 @@
           Find my Ideal Plan
         </a>
       </li>
+      <li class="nav-item dropdown">
+        <a 
+          class="nav-link dropdown-toggle
+          <%= pageName === 'state' && 'active' %>"
+          href="#" 
+          id="navbarDropdownMenuLink" 
+          data-toggle="dropdown" 
+          aria-haspopup="true" 
+          aria-expanded="false">
+          States
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <% longStateNames.forEach(function(stateName) { %>
+            <a class="dropdown-item" href="/states/<%- stateName %>"><%- stateName %></a>
+          <% }); %>
+        </div>
+      </li>
   </div>
 </nav>

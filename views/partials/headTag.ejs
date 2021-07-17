@@ -15,3 +15,10 @@
 
 <!--Page Title-->
 <title><%= typeof title != 'undefined' ? title : 'GreaterHealth' %></title>
+
+<!--Enable State Dropdown on Navbar-->
+<script>
+  $(document).ready(function(){
+    $('.dropdown-toggle').dropdown()
+  });
+</script>

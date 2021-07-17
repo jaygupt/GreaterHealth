@@ -48,3 +48,8 @@ nav {
 table caption {
   font-size: 2rem;
 }
+
+.dropdown-menu {
+  max-height: 280px;
+  overflow-y: auto;
+}
