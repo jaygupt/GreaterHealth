@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!--Add jQuery-->
-    <script src="/jQuery/jquery.js"></script> 
+    <%- include('../partials/headTag', {title: 'National Page'}); %>
 
-    <!--Load in head tag content-->
-    <script>
-      $("head").load("headTag.html");
-    </script>
+    <link rel="stylesheet" href="css/nationalPage.css">
 
     <!--Add Raphael-->
     <script src="js/us-map-1.0.1/lib/raphael.js"></script>
@@ -37,11 +33,11 @@
         });
       });
     </script>
-
-    <title>National Page</title>
   </head>
   <body>
-    <div id="header"></div>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
 
     <h1 id="nationalHeader">Compare National Plans. Or State Plans.</h1>
     <div id="usMap" style="width: 750px; height: 500px;"></div>
@@ -175,6 +171,8 @@
       </a>
     </div>
  
-    <div id="footer"></div>
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
   </body>
 </html>

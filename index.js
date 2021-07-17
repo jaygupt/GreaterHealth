@@ -18,6 +18,12 @@ app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist
 
 app.use(express.urlencoded({extended: true})); // for parsing data
 
+// set up views folder
+app.set('views', './views');
+
+// set view engine to ejs
+app.set('view engine', 'ejs');
+
 // ---Firebase---
 var firebase = require("firebase/app");
 
@@ -47,13 +53,16 @@ const dbRef = database.ref();
 // define hard-coded userId (for now) for use in Firebase
 const userId = 22;
 
-// form is homepage (for now)
+// homepage
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/nationalpage.html");
+  // full path: views/pages/nationalPage.ejs
+  res.render("pages/nationalPage");
 });
 
+// Add an Experience
 app.get("/addExperience", (req, res) => {
-  res.sendFile(__dirname + "/public/addExperience.html");
+  // full path: views/pages/addExperience.ejs
+  res.render("pages/addExperience");
 });
 
 // write to realtime-database
@@ -93,42 +102,3 @@ app.post("/add-experience", (req, res) => {
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
-
-// get data using .get()
-// dbRef.child("experiences").child(userId).get().then((snapshot) => {
-//   if (snapshot.exists()) {
-//     console.log(snapshot.val());
-//   } else {
-//     console.log("No data available");
-//   }
-// }).catch((error) => {
-//   console.error(error);
-// });
-
-// get data with .on()
-// var usernameRef = database.ref('users/' + userId + '/username');
-// usernameRef.on('value', (snapshot) => {
-//   const data = snapshot.val();
-//   console.log(data);
-// });
-
-// update the data
-// var updates = {
-//   email: "sidthesloth@yahoo.com"
-// };
-
-// database.ref('users/' + userId).update(updates, (error) => {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log("Successfully Updated!");
-//   }
-// });
-
-// database.ref(`experiences/${userId}`).remove((error) => {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log("Successfully Deleted")
-//   }
-// });

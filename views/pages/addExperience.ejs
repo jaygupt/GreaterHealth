@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!--Add jQuery-->
-    <script src="/jQuery/jquery.js"></script> 
-
-    <!--Load in head tag content-->
-    <script>
-      $(() => {
-        $("head").load("headTag.html")
-      });
-    </script>
-
-    <title>Add an Experience</title>
+    <%- include('../partials/headTag', {title: 'Add an Experience'}); %>
+    <link rel="stylesheet" href="css/addExperience.css">
   </head>
   <body>
-    <div id="header"></div>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
 
     <h1>Add Your Health Insurance Experience</h1><br />
     <form action="/add-experience" method="POST" id="addExperienceForm">
@@ -87,8 +80,8 @@
       <button class="btn btn-success" type="submit">Submit!</button>
     </form>
 
-    <br />
-
-    <div id="footer"></div>
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
   </body>
 </html>
