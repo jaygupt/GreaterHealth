@@ -2,7 +2,7 @@
 <html>
   <head>
     <%- include('../partials/headTag', {title: state}); %>
-    
+    <link rel="stylesheet" href="/css/statePage.css">
   </head>
   <body>
     <header>
@@ -10,6 +10,8 @@
     </header>
 
     <h1><%= state %></h1>
+
+    <img src="/images/states/<%=state%>.jpg" alt="<%=state%>" id="stateImage">
 
     <footer>
       <%- include('../partials/footer'); %>
