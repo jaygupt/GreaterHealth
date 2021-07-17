@@ -84,7 +84,10 @@ app.get("/", (req, res) => {
 
 app.get("/states/:stateName", (req, res) => {
   const stateName = req.params.stateName;
-  res.render("pages/statePage", {state: stateName});
+  res.render("pages/statePage", {
+    state: stateName,
+    pageName: ""
+  });
 });
 
 // Add an Experience
