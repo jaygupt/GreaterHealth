@@ -68,8 +68,14 @@ app.get("/", (req, res) => {
       'UT' : 'Utah', 'VT' : 'Vermont', 'VA' : 'Virginia', 'WA' : 'Washington', 'WV' : 'West Virginia', 
       'WI' : 'Wisconsin', 'WY' : 'Wyoming', 'DC' : 'Washngton DC' };
 
+  // longStateNames will be array of the values of stateLongName JSON object
+  let longStateNames = [];
+  for(let key of Object.keys(stateLongName)) {
+    longStateNames.push(stateLongName[key]);
+  }
+
   // full path: views/pages/nationalPage.ejs
-  res.render("pages/nationalPage", {stateLongName: stateLongName});
+  res.render("pages/nationalPage", {stateLongName: stateLongName, longStateNames: longStateNames});
 });
 
 app.get("/states/:stateName", (req, res) => {
