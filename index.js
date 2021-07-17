@@ -65,6 +65,15 @@ app.get("/addExperience", (req, res) => {
   res.render("pages/addExperience");
 });
 
+// when index.html form submitted, goes to this route
+app.post("/addExperience", (req, res) => {
+  // write to the firebase realtime database one req.body JSON object
+  writeUserData(req.body);
+
+  // go back to form
+  res.redirect("/");
+});
+
 // write to realtime-database
 function writeUserData(userData) {
   if (!userData.hotuos) {
@@ -89,15 +98,6 @@ function writeUserData(userData) {
     copay: userData.copay
   });
 }
-
-// when index.html form submitted, goes to this route
-app.post("/add-experience", (req, res) => {
-  // write to the firebase realtime database one req.body JSON object
-  writeUserData(req.body);
-
-  // go back to form
-  res.redirect("/");
-});
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
