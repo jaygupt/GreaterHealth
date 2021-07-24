@@ -1,6 +1,9 @@
 // environment variables
 require('dotenv').config();
 
+// create a uuid
+const { v4: uuidv4 } = require('uuid');
+
 // ---Server---
 
 const express = require('express');
@@ -54,7 +57,7 @@ var database = firebase.database();
 const dbRef = database.ref();
 
 // define hard-coded userId (for now) for use in Firebase
-const userId = 22;
+// const userId = 22;
 
 let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 
       'KY' : 'Kentucky', 'LA' : 'Louisiana', 'ME' : 'Maine', 'MD' : 'Maryland', 
@@ -113,17 +116,31 @@ app.get("/states/:stateName", (req, res) => {
 // when index.html form submitted, goes to this route
 app.post("/addExperience", (req, res) => {
   // write to the firebase realtime database one req.body JSON object
-  writeUserData(req.body);
+  writeUserDataToExperiences(req.body);
 
   // go back to form
   res.redirect("/");
 });
 
-// write to realtime-database
-function writeUserData(userData) {
+// write to realtime-database's experiences route
+function writeUserDataToExperiences(userData) {
+  // if the user didn't input "History of Tobacco Use or Smoking"
   if (!userData.hotuos) {
     userData.hotuos = "";
   }
+
+  // if the user didn't input "In or Out of Network"
+  if (!userData.iooon) {
+    userData.iooon = "";
+  }
+
+  // if the user didn't input "Individual or Family Network"
+  if (!userData.iofn) {
+    userData.iofn = "";
+  }
+
+  // generate a unique userID
+  const userId = uuidv4();
 
   database.ref('experiences/' + userId).set({
     age: userData.age,
