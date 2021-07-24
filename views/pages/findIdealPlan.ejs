@@ -51,38 +51,126 @@
     <div id="result"></div>
 
     <script>
-      function tableOfSimilarExperiences(premium, deductible, copay, category, percentEnrolled) {
-        return `<div class="table-responsive">
+      function returnFromExperiences(theCity, theState, fromExperiences) {
+        // counter for tables
+        var sameCityAndStateCounter = 1;
+        var sameStateCounter = 1;
+
+        var sameCityAndState = fromExperiences.experiencesWithSameCityAndState;
+        var sameState = fromExperiences.experiencesWithSameState;
+
+        var theHTML = `<div class="table-responsive">
           <table class="table table-hover caption-top aTable">
-            <caption>Plans in your State:</caption>
+            <caption>Health Insurance Experiences in ${theCity}, ${theState}:</caption>
             <thead>
               <tr>
                 <th scope="col"></th>
+                <th scope="col">Age</th>
+                <th scope="col">History of Tobacco Use or Smoking</th>
+                <th scope="col">Previous Surgeries</th>
+                <th scope="col">Out of Pocket Cost After Insurance</th>
+                <th scope="col">Hospital Name</th>
+                <th scope="col">Hospital City</th>
+                <th scope="col">In or Out of Network</th>
+                <th scope="col">Insurance Company</th>
+                <th scope="col">Individual or Family Network</th>
+                <th scope="col">Plan Category</th>
                 <th scope="col">Premium</th>
                 <th scope="col">Deductible</th>
                 <th scope="col">Copay</th>
-                <th scope="col">Category</th>
-                <th scope="col">% Enrolled</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody>`;
+        
+        for (var key in sameCityAndState) {
+          theHTML += `
+            <tr>
+              <th scope="row">${sameCityAndStateCounter}</th>
+              <td>${sameCityAndState[key].age}</td>
+              <td>${sameCityAndState[key].hotuos}</td>
+              <td>${sameCityAndState[key].prevSurgeries}</td>
+              <td>${sameCityAndState[key].oopCost}</td>
+              <td>${sameCityAndState[key].hospitalName}</td>
+              <td>${sameCityAndState[key].hospitalCity}</td>
+              <td>${sameCityAndState[key].iooon}</td>
+              <td>${sameCityAndState[key].companyName}</td>
+              <td>${sameCityAndState[key].iofn}</td>
+              <td>${sameCityAndState[key].planCategory}</td>
+              <td>${sameCityAndState[key].premium}</td>
+              <td>${sameCityAndState[key].deductible}</td>
+              <td>${sameCityAndState[key].copay}</td>
+            </tr>
+          `;
+          sameCityAndStateCounter++;
+        }
+      
+        theHTML += `
+              </tbody>
+            </table> 
+          </div>
+          `;
+
+        // experiences in all other cities in same state
+        theHTML += `<div class="table-responsive">
+          <table class="table table-hover caption-top aTable">
+            <caption>Health Insurance Experiences in Other Cities in ${theState}:</caption>
+            <thead>
               <tr>
-                <th scope="row">Plan A</th>
-                <td>${premium}</td>
-                <td>${deductible}</td>
-                <td>${copay}</td>
-                <td>${category}</td>
-                <td>${percentEnrolled}</td>
+                <th scope="col"></th>
+                <th scope="col">Age</th>
+                <th scope="col">City of Residence</th>
+                <th scope="col">History of Tobacco Use or Smoking</th>
+                <th scope="col">Previous Surgeries</th>
+                <th scope="col">Out of Pocket Cost After Insurance</th>
+                <th scope="col">Hospital Name</th>
+                <th scope="col">Hospital City</th>
+                <th scope="col">In or Out of Network</th>
+                <th scope="col">Insurance Company</th>
+                <th scope="col">Individual or Family Network</th>
+                <th scope="col">Plan Category</th>
+                <th scope="col">Premium</th>
+                <th scope="col">Deductible</th>
+                <th scope="col">Copay</th>
               </tr>
-            </tbody>
-          </table> 
-        </div>`;
+            </thead>
+            <tbody>`;
+        
+        for (var key in sameState) {
+          theHTML += `
+            <tr>
+              <th scope="row">${sameStateCounter}</th>
+              <td>${sameState[key].age}</td>
+              <td>${sameState[key].city}</td>
+              <td>${sameState[key].hotuos}</td>
+              <td>${sameState[key].prevSurgeries}</td>
+              <td>${sameState[key].oopCost}</td>
+              <td>${sameState[key].hospitalName}</td>
+              <td>${sameState[key].hospitalCity}</td>
+              <td>${sameState[key].iooon}</td>
+              <td>${sameState[key].companyName}</td>
+              <td>${sameState[key].iofn}</td>
+              <td>${sameState[key].planCategory}</td>
+              <td>${sameState[key].premium}</td>
+              <td>${sameState[key].deductible}</td>
+              <td>${sameState[key].copay}</td>
+            </tr>
+          `;
+          sameStateCounter++;
+        }
+      
+        theHTML += `
+              </tbody>
+            </table> 
+          </div>
+          `;
+
+        return `${theHTML}`;
       }
 
-      function returnTable(premium, deductible, copay, category, percentEnrolled) {
-        return `<div class="table-responsive">
+      function returnStatePlans(theState, fromStates) {
+        var theHTML = `<div class="table-responsive">
           <table class="table table-hover caption-top aTable">
-            <caption>Plans in your State:</caption>
+            <caption>Publicly Available Data on Plans in ${theState}:</caption>
             <thead>
               <tr>
                 <th scope="col"></th>
@@ -93,21 +181,37 @@
                 <th scope="col">% Enrolled</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Plan A</th>
-                <td>${premium}</td>
-                <td>${deductible}</td>
-                <td>${copay}</td>
-                <td>${category}</td>
-                <td>${percentEnrolled}</td>
-              </tr>
+            <tbody>`;
+        
+        for (var key in fromStates) {
+          theHTML += `
+            <tr>
+              <th scope="row">${key}</th>
+              <td>${fromStates[key].premium}</td>
+              <td>${fromStates[key].deductible}</td>
+              <td>${fromStates[key].copay}</td>
+              <td>${fromStates[key].category}</td>
+              <td>${fromStates[key].percentEnrolled}</td>
+            </tr>
+          `;
+        }
+
+        theHTML += `
             </tbody>
           </table> 
-        </div>`;
+        </div>
+        `
+
+        return `${theHTML}`;
       }
 
       $("#findPlanForm").submit(function(event) {
+        // city that was inputted into form
+        var theCity = $("#city").val();
+        
+        // state that was inputted into form
+        var theState = $("#state").val();
+
         event.preventDefault();
 
         // ajaxRequest to send inputted data to server
@@ -116,19 +220,13 @@
           type: 'post',
           data: $('#findPlanForm').serialize()
         }).done((res) => {
-          // if there is data in their state, show it
+          // show them the data based on their responses
           if (res) {
-            console.log(res);
-            // $("#result").html(returnTable(
-            //   res.premium, 
-            //   res.deductible, 
-            //   res.copay, 
-            //   res.category, 
-            //   res.percentEnrolled
-            // ));
+            $("#result").html(returnFromExperiences(theCity, theState, res.fromExperiences));
+            $("#result").append(returnStatePlans(theState, res.fromStates));
           } else {
             // error in response
-            // $("#result").html("<h1>Sorry, there is no data for your state</h1>");
+            console.log("Error in Response!");
           }
         }).fail(() => {
           $("#result").html("<h1>Error! Did you Enter Your Information Correctly?</h1>");

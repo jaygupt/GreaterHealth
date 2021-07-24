@@ -110,19 +110,25 @@ app.get("/states/:stateName", (req, res) => {
 
 // write to realtime-database's experiences route
 function writeUserDataToExperiences(userData) {
-  // if the user didn't input "History of Tobacco Use or Smoking"
+  // set the radio questions to a blank
   if (!userData.hotuos) {
     userData.hotuos = "";
   }
 
-  // if the user didn't input "In or Out of Network"
   if (!userData.iooon) {
     userData.iooon = "";
   }
 
-  // if the user didn't input "Individual or Family Network"
   if (!userData.iofn) {
     userData.iofn = "";
+  }
+
+  // go through each key-value pair in userData
+  for (key in userData) {
+    // if the value is not provided, set it to N/A
+    if (userData[key] == "") {
+      userData[key] = "N/A";
+    }
   }
 
   // generate a unique userID
