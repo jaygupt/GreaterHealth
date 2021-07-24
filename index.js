@@ -56,9 +56,6 @@ var database = firebase.database();
 
 const dbRef = database.ref();
 
-// define hard-coded userId (for now) for use in Firebase
-// const userId = 22;
-
 let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 
       'KY' : 'Kentucky', 'LA' : 'Louisiana', 'ME' : 'Maine', 'MD' : 'Maryland', 
       'MA' : 'Massachusetts', 'MI' : 'Michigan', 'MN' : 'Minnesota', 'MS' : 'Mississippi', 
@@ -161,6 +158,55 @@ function writeUserDataToExperiences(userData) {
   });
 }
 
+// when index.html form submitted, goes to this route
+app.post("/addExperience", (req, res) => {
+  // write to the firebase realtime database one req.body JSON object
+  writeUserData(req.body);
+
+  // go back to form
+  res.redirect("/");
+});
+
+// when submitting form on findIdealPlan.html
+app.post("/findIdealPlan", (req, res) => {
+  // send the plans in the user's state
+  dbRef.child("states").child(req.body.state).get().then((snapshot) => {
+    if (snapshot.exists()) {
+      res.send(snapshot.val());
+    } else {
+      res.send(false);
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
+
+function readUserData() {
+  dbRef.child("experiences").get().then((snapshot) => {
+    if (snapshot.exists) {
+      /*
+      let snap = snapshot.val();
+      for (i in snap){
+       console.log("\n" + i);
+        for (n in snap[i]){
+             console.log(n, snap[i][n])     
+      }
+      */
+      let snapValue = snapshot.val();
+      for (i in snapValue) {
+        console.log(snapValue[i].state);
+      }
+      // console.log(snapshot.val());
+    } else {
+      console.log("Doesn't exist.");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+
+readUserData()
