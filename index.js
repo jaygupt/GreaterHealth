@@ -1,7 +1,7 @@
 // environment variables
 require('dotenv').config();
 
-// create a uuid
+// require the uuid package
 const { v4: uuidv4 } = require('uuid');
 
 // ---Server---
@@ -21,7 +21,6 @@ app.use("/js", express.static(path.join(__dirname, "public/js")));
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
-
 app.use(express.urlencoded({extended: true})); // for parsing data
 
 // set up views folder
@@ -34,7 +33,6 @@ app.set('view engine', 'ejs');
 var firebase = require("firebase/app");
 
 // Add Firebase products that will be used here
-// require("firebase/auth");
 require("firebase/database");
 
 var firebaseConfig = {
@@ -110,15 +108,6 @@ app.get("/states/:stateName", (req, res) => {
   });
 });
 
-// when index.html form submitted, goes to this route
-app.post("/addExperience", (req, res) => {
-  // write to the firebase realtime database one req.body JSON object
-  writeUserDataToExperiences(req.body);
-
-  // go back to form
-  res.redirect("/");
-});
-
 // write to realtime-database's experiences route
 function writeUserDataToExperiences(userData) {
   // if the user didn't input "History of Tobacco Use or Smoking"
@@ -158,55 +147,100 @@ function writeUserDataToExperiences(userData) {
   });
 }
 
-// when index.html form submitted, goes to this route
+// when addExperience.ejs's form is submitted, goes to this route
 app.post("/addExperience", (req, res) => {
-  // write to the firebase realtime database one req.body JSON object
-  writeUserData(req.body);
+  // write the user's data to the firebase realtime database
+  writeUserDataToExperiences(req.body);
 
   // go back to form
   res.redirect("/");
 });
 
-// when submitting form on findIdealPlan.html
-app.post("/findIdealPlan", (req, res) => {
-  // send the plans in the user's state
-  dbRef.child("states").child(req.body.state).get().then((snapshot) => {
-    if (snapshot.exists()) {
-      res.send(snapshot.val());
-    } else {
-      res.send(false);
-    }
-  }).catch((error) => {
-    console.error(error);
-  });
-});
-
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
-});
-
-function readUserData() {
-  dbRef.child("experiences").get().then((snapshot) => {
-    if (snapshot.exists) {
-      /*
-      let snap = snapshot.val();
-      for (i in snap){
-       console.log("\n" + i);
-        for (n in snap[i]){
-             console.log(n, snap[i][n])     
+function queryExperiences(req) {
+  // return a Promise; it will wait for .then to get resolved before returning
+  return new Promise((resolve, reject) => {
+    dbRef.child("experiences").get().then((snapshot) => {
+      if (snapshot.exists) {
+        // experiences from other users: same state and city
+        var sameCityAndStateCounter = 0;
+        var experiencesWithSameCityAndState = {};
+  
+        var sameStateCounter = 0;
+        var experiencesWithSameState = {};
+  
+        // snapValue is the data in experiences
+        var snapValue = snapshot.val();
+  
+        // loop through each user (represented by userID) in snapValue
+        for (user in snapValue) {
+          // if the inputted city and state matches with a city and state in the database
+          if (req.body.city == snapValue[user].city && req.body.state == snapValue[user].state) {
+            experiencesWithSameCityAndState[sameCityAndStateCounter] = snapValue[user]; 
+            sameCityAndStateCounter++;
+            continue;
+          }
+  
+          // if the inputted state matches with a state in the database (and city doesn't match)
+          if (req.body.state == snapValue[user].state) {
+            experiencesWithSameState[sameStateCounter] = snapValue[user]; 
+            sameStateCounter++;
+          }
+        }
+  
+        return resolve({experiencesWithSameState, experiencesWithSameCityAndState});
+      } else {
+        // snapshot doesn't exist
+        console.log("Snapshot doesn't exist.");
       }
-      */
-      let snapValue = snapshot.val();
-      for (i in snapValue) {
-        console.log(snapValue[i].state);
-      }
-      // console.log(snapshot.val());
-    } else {
-      console.log("Doesn't exist.");
-    }
-  }).catch((error) => {
-    console.error(error);
+    }).catch((error) => {
+      // if there is an error, log it to console
+      return reject(error);
+    });
   });
 }
 
-readUserData()
+function queryStates(theState) {
+  return new Promise((resolve, reject) => {
+    // send the plans in the user's state
+    dbRef.child("states").child(theState).get().then((snapshot) => {
+      if (snapshot.exists()) {
+        return resolve(snapshot.val());
+      } else {
+        return reject(false);
+      }
+    }).catch((error) => {
+      return reject(false);
+    });
+  });
+}
+
+// when findIdealPlan.ejs's form is submitted, goes to this route
+app.post("/findIdealPlan", (req, res) => {
+  var toBeSent = {};
+
+  // send two things: experiences from other users & state plans 
+  queryExperiences(req)
+    .then(responseFromQueryExperiences => {
+      toBeSent["fromExperiences"] = responseFromQueryExperiences;
+      queryStates(req.body.state)
+      .then(responseFromQueryStates => {
+        toBeSent["fromStates"] = responseFromQueryStates;
+      })
+      .catch(responseFromQueryStates => {
+        // error; likely, that state isn't in the database
+        toBeSent["fromStates"] = false;
+      })
+      .then(() => {
+        res.send(toBeSent);
+      })
+    })
+    .catch((err) => {
+      // in case of error
+      console.log(err);
+    });
+});
+
+// listen on the specified port
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
+});

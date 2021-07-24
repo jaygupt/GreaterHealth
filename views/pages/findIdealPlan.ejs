@@ -11,7 +11,7 @@
 
     <h1>Find My Ideal Plan</h1>
     <h3>Fill out the information below, and click "Find me a Plan!" to see competitive offers in your area.</h3>
-    <!-- <form method="POST" id="findPlanForm"> -->
+
     <form id="findPlanForm">
       <h4>Personal Information</h4>
       
@@ -43,7 +43,7 @@
       <br />
       <input type="radio" id="family" name="individualOrFamilyEnrollment" value="Family">
       <label for="family">Family</label>
-      <br />
+      <br /><br />
 
       <input class="btn btn-success" type="submit" value="Find me a Plan!"></input>
     </form>
@@ -51,6 +51,33 @@
     <div id="result"></div>
 
     <script>
+      function tableOfSimilarExperiences(premium, deductible, copay, category, percentEnrolled) {
+        return `<div class="table-responsive">
+          <table class="table table-hover caption-top aTable">
+            <caption>Plans in your State:</caption>
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Premium</th>
+                <th scope="col">Deductible</th>
+                <th scope="col">Copay</th>
+                <th scope="col">Category</th>
+                <th scope="col">% Enrolled</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Plan A</th>
+                <td>${premium}</td>
+                <td>${deductible}</td>
+                <td>${copay}</td>
+                <td>${category}</td>
+                <td>${percentEnrolled}</td>
+              </tr>
+            </tbody>
+          </table> 
+        </div>`;
+      }
 
       function returnTable(premium, deductible, copay, category, percentEnrolled) {
         return `<div class="table-responsive">
@@ -82,6 +109,8 @@
 
       $("#findPlanForm").submit(function(event) {
         event.preventDefault();
+
+        // ajaxRequest to send inputted data to server
         var ajaxRequest = $.ajax({
           url: "/findIdealPlan",
           type: 'post',
@@ -89,19 +118,20 @@
         }).done((res) => {
           // if there is data in their state, show it
           if (res) {
-            $("#result").html(returnTable(
-              res.premium, 
-              res.deductible, 
-              res.copay, 
-              res.category, 
-              res.percentEnrolled
-            ));
+            console.log(res);
+            // $("#result").html(returnTable(
+            //   res.premium, 
+            //   res.deductible, 
+            //   res.copay, 
+            //   res.category, 
+            //   res.percentEnrolled
+            // ));
           } else {
-            // else, tell them there is no data for their state
-            $("#result").html("<h1>Sorry, there is no data for your state</h1>");
+            // error in response
+            // $("#result").html("<h1>Sorry, there is no data for your state</h1>");
           }
         }).fail(() => {
-          $("#result").html("<h1>Error! Did you Enter a State Name?</h1>");
+          $("#result").html("<h1>Error! Did you Enter Your Information Correctly?</h1>");
         });
       });
     </script>
