@@ -123,6 +123,12 @@ function writeUserDataToExperiences(userData) {
     userData.iofn = "";
   }
 
+  // add a dollar sign in front of monetary inputs
+  userData.oopCost = "$" + userData.oopCost;
+  userData.premium = "$" + userData.premium;
+  userData.deductible = "$" + userData.deductible;
+  userData.copay = "$" + userData.copay;
+
   // go through each key-value pair in userData
   for (key in userData) {
     // if the value is not provided, set it to N/A

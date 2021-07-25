@@ -5,47 +5,59 @@
     <link rel="stylesheet" href="/css/findIdealPlan.css">
   </head>
   <body>
-    <header>
-      <%- include('../partials/header'); %>
-    </header>
+    <%- include('../partials/header'); %>
 
     <h1>Find My Ideal Plan</h1>
     <h3>Fill out the information below, and click "Find me a Plan!" to see competitive offers in your area.</h3>
 
     <form id="findPlanForm">
       <h4>Personal Information</h4>
-      
-      <label for="age">Age</label><br />
-      <input type="number" id="age" name="age" placeholder="0"><br />
 
-      <label for="city">City</label><br />
-      <input type="text" id="city" name="city" placeholder="San Francisco"><br />
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" type="number" id="age" name="age" placeholder="0">
+      </div>
 
-      <label for="state">State</label><br />
-      <input type="text" id="state" name="state" placeholder="California"><br />
+      <div class="form-group">
+        <label for="city">City</label>
+        <input class="form-control" type="text" id="city" name="city" placeholder="San Francisco">
+      </div>
 
-      <label for="hotuos">History of Tobacco Use or Smoking</label>
-      <br />
-      <input type="radio" id="yes" name="hotuos" value="Yes">
-      <label for="yes">Yes</label>
-      <br />
-      <input type="radio" id="no" name="hotuos" value="No">
-      <label for="no">No</label>
-      <br />
+      <div class="form-group">
+        <label for="state">State</label>
+        <input class="form-control" type="text" id="state" name="state" placeholder="California">
+      </div>
 
-      <label for="surgeryOrMedNeeded">Surgery/Medication Needed</label><br />
-      <input type="text" id="surgeryOrMedNeeded" name="surgeryOrMedNeeded"><br />
+      <fieldset class="form-group">
+        <label for="hotuos">History of Tobacco Use or Smoking</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="yes" name="hotuos" value="Yes">
+          <label class="form-check-label" for="yes">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="no" name="hotuos" value="No">
+          <label class="form-check-label" for="no">No</label>
+        </div>
+      </fieldset>
 
-      <label for="individualOrFamilyEnrollment">Individual or Family Enrollment</label>
-      <br />
-      <input type="radio" id="individual" name="individualOrFamilyEnrollment" value="Individual">
-      <label for="individual">Individual</label>
-      <br />
-      <input type="radio" id="family" name="individualOrFamilyEnrollment" value="Family">
-      <label for="family">Family</label>
-      <br /><br />
+      <div class="form-group">
+        <label for="surgeryOrMedNeeded">Surgery/Medication Needed</label>
+        <input class="form-control" type="text" id="surgeryOrMedNeeded" name="surgeryOrMedNeeded">
+      </div>
 
-      <input class="btn btn-success" type="submit" value="Find me a Plan!"></input>
+      <fieldset class="form-group">
+        <label for="iofn">Individual or Family Network:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="individual-network" name="iofn" value="Individual Network">
+          <label class="form-check-label" for="individual-network">Individual Network</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="family-network" name="iofn" value="Family Network">
+          <label class="form-check-label" for="family-network">Family Network</label>
+        </div>
+      </fieldset>
+
+      <button class="btn btn-success" type="submit">Find me a Plan!</button>
     </form>
 
     <div id="result"></div>
@@ -234,8 +246,6 @@
       });
     </script>
 
-    <footer>
-      <%- include('../partials/footer'); %>
-    </footer>
+    <%- include('../partials/footer'); %>
   </body>
 </html>

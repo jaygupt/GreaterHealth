@@ -1,53 +1,55 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="/">
-      <img src="/images/favicon.ico" width="30" height="30" class="align-top" alt="GreaterHealth Brand Image" id="brandImage">
-      GreaterHealth
-    </a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <a 
-          class="nav-link 
-          <%= pageName === 'home' && 'active' %>"
-          href="/">
-          Home
-        </a>
-      </li>
-      <li class="nav-item">
-        <a 
-          class="nav-link 
-          <%= pageName === 'addExperience' && 'active' %>"
-          href="/addExperience">
-          Add an Experience
-        </a>
-      </li>
-      <li class="nav-item">
-        <a 
-          class="nav-link 
-          <%= pageName === 'findIdealPlan' && 'active' %>"
-          href="/findIdealPlan">
-          Find my Ideal Plan
-        </a>
-      </li>
-      <li class="nav-item dropdown">
-        <a 
-          class="nav-link dropdown-toggle
-          <%= pageName === 'state' && 'active' %>"
-          href="#" 
-          id="navbarDropdownMenuLink" 
-          data-toggle="dropdown" 
-          aria-haspopup="true" 
-          aria-expanded="false">
-          States
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <% longStateNames.forEach(function(stateName) { %>
-            <a class="dropdown-item" href="/states/<%- stateName %>"><%- stateName %></a>
-          <% }); %>
-        </div>
-      </li>
-  </div>
-</nav>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="/">
+        <img src="/images/favicon.ico" width="30" height="30" class="align-top" alt="GreaterHealth Brand Image" id="brandImage">
+        GreaterHealth
+      </a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a 
+            class="nav-link 
+            <%= pageName === 'home' && 'active' %>"
+            href="/">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link 
+            <%= pageName === 'addExperience' && 'active' %>"
+            href="/addExperience">
+            Add an Experience
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link 
+            <%= pageName === 'findIdealPlan' && 'active' %>"
+            href="/findIdealPlan">
+            Find my Ideal Plan
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a 
+            class="nav-link dropdown-toggle
+            <%= pageName === 'state' && 'active' %>"
+            href="#" 
+            id="navbarDropdownMenuLink" 
+            data-toggle="dropdown" 
+            aria-haspopup="true" 
+            aria-expanded="false">
+            States
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <% longStateNames.forEach(function(stateName) { %>
+              <a class="dropdown-item" href="/states/<%- stateName %>"><%- stateName %></a>
+            <% }); %>
+          </div>
+        </li>
+    </div>
+  </nav>
+</header>

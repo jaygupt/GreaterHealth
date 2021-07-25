@@ -18,6 +18,14 @@ form h4 {
   margin-top: 10px;
 }
 
+.form-control {
+  width: 12.5%;
+}
+
+.form-check-label {
+  margin-top: 0;
+}
+
 h1 {
   text-align: center;
 }

@@ -5,83 +5,115 @@
     <link rel="stylesheet" href="/css/addExperience.css">
   </head>
   <body>
-    <header>
-      <%- include('../partials/header'); %>
-    </header>
+    <%- include('../partials/header'); %>
 
     <h1>Add Your Health Insurance Experience</h1><br />
     <form action="/addExperience" method="POST">
       <h4>Personal Information</h4>
-      <label for="age">Age</label><br />
-      <input type="number" id="age" name="age" placeholder="0"><br />
 
-      <label for="city">City</label><br />
-      <input type="text" id="city" name="city" placeholder="San Francisco"><br />
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" type="number" id="age" name="age" placeholder="0">
+      </div>
 
-      <label for="state">State</label><br />
-      <input type="text" id="state" name="state" placeholder="California"><br />
+      <div class="form-group">
+        <label for="city">City</label>
+        <input class="form-control" type="text" id="city" name="city" placeholder="San Francisco">
+      </div>
 
-      <label for="hotuos">History of Tobacco Use or Smoking</label>
-      <br />
-      <input type="radio" id="yes" name="hotuos" value="Yes">
-      <label for="yes">Yes</label>
-      <br />
-      <input type="radio" id="no" name="hotuos" value="No">
-      <label for="no">No</label>
-      <br />
+      <div class="form-group">
+        <label for="state">State</label>
+        <input class="form-control" type="text" id="state" name="state" placeholder="California">
+      </div>
 
-      <label for="prevSurgeries">Previous Surgeries</label><br />
-      <input type="text" id="prevSurgeries" name="prevSurgeries"><br />
+      <fieldset class="form-group">
+        <label for="hotuos">History of Tobacco Use or Smoking</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="yes" name="hotuos" value="Yes">
+          <label class="form-check-label" for="yes">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="no" name="hotuos" value="No">
+          <label class="form-check-label" for="no">No</label>
+        </div>
+      </fieldset>
 
-      <label for="oopCost">Out of Pocket Cost After Insurance</label><br />
-      <input type="number" id="oopCost" name="oopCost"><br />
+      <div class="form-group">
+        <label for="prevSurgeries">Previous Surgeries</label>
+        <input class="form-control" type="text" id="prevSurgeries" name="prevSurgeries" placeholder="Meniscus Repair">
+      </div>
+
+      <div class="form-group">
+        <label for="oopCost">Out of Pocket Cost After Insurance ($)</label>
+        <input class="form-control" type="number" id="oopCost" name="oopCost" step=".01" placeholder="$1000">
+      </div>
 
       <h4>Hospital Information</h4>
-      <label for="hospitalName">Name of Hospital</label><br />
-      <input type="text" id="hospitalName" name="hospitalName"><br />
 
-      <label for="hospitalCity">City</label><br />
-      <input type="text" id="hospitalCity" name="hospitalCity" placeholder="San Francisco"><br />
+      <div class="form-group">
+        <label for="hospitalName">Name of Hospital</label>
+        <input class="form-control" type="text" id="hospitalName" name="hospitalName" placeholder="Kaiser Permanente">
+      </div>
 
-      <label for="iooon">In or Out of Network:</label>
-      <br />
-      <input type="radio" id="in-network" name="iooon" value="In-Network">
-      <label for="in-network">In-Network</label>
-      <br />
-      <input type="radio" id="out-of-network" name="iooon" value="Out-of-Network">
-      <label for="out-of-network">Out-of-Network</label>
-      <br />
+      <div class="form-group">
+        <label for="hospitalCity">City</label>
+        <input class="form-control" type="text" id="hospitalCity" name="hospitalCity" placeholder="Daly City">
+      </div>
+
+      <fieldset class="form-group">
+        <label for="iooon">In or Out of Network:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="in-network" name="iooon" value="In-Network">
+          <label class="form-check-label" for="in-network">In-Network</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="out-of-network" name="iooon" value="Out-of-Network">
+          <label class="form-check-label" for="out-of-network">Out-of-Network</label>
+        </div>
+      </fieldset>
 
       <h4>Insurance Information</h4>
-      <label for="companyName">Name of Company</label><br />
-      <input type="text" id="companyName" name="companyName"><br />
 
-      <label for="iofn">Individual or Family Network:</label>
-      <br />
-      <input type="radio" id="individual-network" name="iofn" value="Individual Network">
-      <label for="individual-network">Individual Network</label>
-      <br />
-      <input type="radio" id="family-network" name="iofn" value="Family Network">
-      <label for="family-network">Family Network</label>
-      <br />
+      <div class="form-group">
+        <label for="companyName">Name of Company</label>
+        <input class="form-control" type="text" id="companyName" name="companyName" placeholder="Blue Shield">
+      </div>
 
-      <label for="planCategory">Plan Category</label><br />
-      <input type="text" id="planCategory" name="planCategory"><br />
+      <fieldset class="form-group">
+        <label for="iofn">Individual or Family Network:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="individual-network" name="iofn" value="Individual Network">
+          <label class="form-check-label" for="individual-network">Individual Network</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="family-network" name="iofn" value="Family Network">
+          <label class="form-check-label" for="family-network">Family Network</label>
+        </div>
+      </fieldset>
 
-      <label for="premium">Premium</label><br />
-      <input type="number" id="premium" name="premium"><br />
+      <div class="form-group">
+        <label for="planCategory">Plan Category</label>
+        <input class="form-control" type="text" id="planCategory" name="planCategory" placeholder="Gold">
+      </div>
 
-      <label for="deductible">Deductible</label><br />
-      <input type="number" id="deductible" name="deductible"><br />
+      <div class="form-group">
+        <label for="premium">Premium ($)</label>
+        <input class="form-control" type="number" id="premium" name="premium" step=".01" placeholder="$200">
+      </div>
 
-      <label for="copay">Copay</label><br />
-      <input type="number" id="copay" name="copay"><br />
+      <div class="form-group">
+        <label for="deductible">Deductible ($)</label>
+        <input class="form-control" type="number" id="deductible" name="deductible" step=".01" placeholder="$5000">
+      </div>
+
+      <div class="form-group">
+        <label for="copay">Copay ($)</label>
+        <input class="form-control" type="number" id="copay" name="copay" step=".01" placeholder="$25">
+      </div>
 
       <button class="btn btn-success" type="submit">Submit!</button>
     </form>
-
-    <footer>
-      <%- include('../partials/footer'); %>
-    </footer>
+    
+    <%- include('../partials/footer'); %>
   </body>
 </html>
