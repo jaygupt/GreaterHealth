@@ -67,46 +67,63 @@
 
         var theHTML = `<div class="table-responsive">
           <table class="table table-hover caption-top aTable">
-            <caption>Health Insurance Experiences in ${theCity}, ${theState}:</caption>
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Age</th>
-                <th scope="col">History of Tobacco Use or Smoking</th>
-                <th scope="col">Previous Surgeries</th>
-                <th scope="col">Out of Pocket Cost After Insurance</th>
-                <th scope="col">Hospital Name</th>
-                <th scope="col">Hospital City</th>
-                <th scope="col">In or Out of Network</th>
-                <th scope="col">Insurance Company</th>
-                <th scope="col">Individual or Family Network</th>
-                <th scope="col">Plan Category</th>
-                <th scope="col">Premium</th>
-                <th scope="col">Deductible</th>
-                <th scope="col">Copay</th>
-              </tr>
-            </thead>
-            <tbody>`;
-        
+          <caption>Health Insurance Experiences in ${theCity}, ${theState}:</caption>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Age</th>
+              <th scope="col">History of Tobacco Use or Smoking</th>
+              <th scope="col">Previous Surgeries</th>
+              <th scope="col">Out of Pocket Cost After Insurance</th>
+              <th scope="col">Hospital Name</th>
+              <th scope="col">Hospital City</th>
+              <th scope="col">In or Out of Network</th>
+              <th scope="col">Insurance Company</th>
+              <th scope="col">Individual or Family Network</th>
+              <th scope="col">Plan Category</th>
+              <th scope="col">Premium</th>
+              <th scope="col">Deductible</th>
+              <th scope="col">Copay</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
         for (var key in sameCityAndState) {
           theHTML += `
             <tr>
               <th scope="row">${sameCityAndStateCounter}</th>
               <td>${sameCityAndState[key].age}</td>
               <td>${sameCityAndState[key].hotuos}</td>
-              <td>${sameCityAndState[key].prevSurgeries}</td>
-              <td>${sameCityAndState[key].oopCost}</td>
-              <td>${sameCityAndState[key].hospitalName}</td>
-              <td>${sameCityAndState[key].hospitalCity}</td>
-              <td>${sameCityAndState[key].iooon}</td>
-              <td>${sameCityAndState[key].companyName}</td>
-              <td>${sameCityAndState[key].iofn}</td>
-              <td>${sameCityAndState[key].planCategory}</td>
-              <td>${sameCityAndState[key].premium}</td>
-              <td>${sameCityAndState[key].deductible}</td>
-              <td>${sameCityAndState[key].copay}</td>
-            </tr>
-          `;
+              <td>`;
+          
+          // different commands based on whether or not the entry has many surgeries
+          if (Array.isArray(sameCityAndState[key].prevSurgeries)) {
+            // if they have many surgeries
+            for (var surgeryIndex in sameCityAndState[key].prevSurgeries) { 
+              theHTML += `
+                ${sameCityAndState[key].prevSurgeries[surgeryIndex]}<br/>
+              `;
+            }
+          } else {
+            theHTML += `
+                ${sameCityAndState[key].prevSurgeries}<br/>
+            `;
+          }
+
+          theHTML +=
+          `</td>
+            <td>${sameCityAndState[key].oopCost}</td>
+            <td>${sameCityAndState[key].hospitalName}</td>
+            <td>${sameCityAndState[key].hospitalCity}</td>
+            <td>${sameCityAndState[key].iooon}</td>
+            <td>${sameCityAndState[key].companyName}</td>
+            <td>${sameCityAndState[key].iofn}</td>
+            <td>${sameCityAndState[key].planCategory}</td>
+            <td>${sameCityAndState[key].premium}</td>
+            <td>${sameCityAndState[key].deductible}</td>
+            <td>${sameCityAndState[key].copay}</td>
+          </tr>`;
+          
           sameCityAndStateCounter++;
         }
       
@@ -114,7 +131,7 @@
               </tbody>
             </table> 
           </div>
-          `;
+        `;
 
         // experiences in all other cities in same state
         theHTML += `<div class="table-responsive">
@@ -148,7 +165,25 @@
               <td>${sameState[key].age}</td>
               <td>${sameState[key].city}</td>
               <td>${sameState[key].hotuos}</td>
-              <td>${sameState[key].prevSurgeries}</td>
+              <td>`;
+          
+          // different commands based on whether or not the entry has many surgeries
+          if (Array.isArray(sameState[key].prevSurgeries)) {
+            // if they have many surgeries
+            for (var surgeryIndex in sameState[key].prevSurgeries) { 
+              theHTML += `
+                ${sameState[key].prevSurgeries[surgeryIndex]}
+              `;
+            }
+          } else {
+            theHTML += `
+                ${sameState[key].prevSurgeries}
+            `;
+          }
+              
+          theHTML +=
+              `
+              </td>
               <td>${sameState[key].oopCost}</td>
               <td>${sameState[key].hospitalName}</td>
               <td>${sameState[key].hospitalCity}</td>
@@ -161,6 +196,7 @@
               <td>${sameState[key].copay}</td>
             </tr>
           `;
+
           sameStateCounter++;
         }
       
@@ -206,7 +242,7 @@
             </tbody>
           </table> 
         </div>
-        `
+        `;
 
         return `${theHTML}`;
       }
