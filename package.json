@@ -8,6 +8,7 @@
     "firebase": "^8.7.0",
     "jquery": "^3.6.0",
     "nodemon": "^2.0.9",
+    "tabulator-tables": "^4.9.3",
     "uuid": "^8.3.2"
   },
   "name": "greaterhealth",

@@ -17,7 +17,6 @@ const path = require("path");
 // ---Middleware---
 
 // serve static files (images, CSS/JavaScript files)
-
 app.use(express.static(path.join(__dirname, "public"))); 
 app.use("/css", express.static(path.join(__dirname, "public/css")));
 app.use("/images", express.static(path.join(__dirname, "public/images")));
@@ -25,6 +24,8 @@ app.use("/js", express.static(path.join(__dirname, "public/js")));
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
+app.use("/tabulatorCSS", express.static(path.join(__dirname, "node_modules/tabulator-tables/dist/css")));
+app.use("/tabulatorJS", express.static(path.join(__dirname, "node_modules/tabulator-tables/dist/js")))
 app.use(express.urlencoded({extended: true})); // for parsing data
 
 // set up views folder
