@@ -4,6 +4,9 @@ require('dotenv').config();
 // require the uuid package
 const { v4: uuidv4 } = require('uuid');
 
+// require axios
+const axios = require('axios');
+
 // ---Server---
 
 const express = require('express');
@@ -250,6 +253,36 @@ app.post("/findIdealPlan", (req, res) => {
     .catch((err) => {
       // in case of error
       console.log(err);
+    });
+});
+
+// Get Cities Based on State Name
+app.post("/getStateCities", (req, res) => {
+  const URL = `https://www.universal-tutorial.com/api/cities/${req.body.stateName}`;
+  
+  let universalTutorialConfig = { 
+    headers: { 
+      'Accept': 'application/json',
+      'Authorization': process.env.authToken
+    } 
+  }
+
+  var JSONObject = {
+    "cities": []
+  };
+
+  // make axios GET request
+  axios.get(URL, universalTutorialConfig)
+  .then(response => {
+      response = response.data;
+      for (i = 0; i < response.length; i++) {
+        JSONObject["cities"].push(response[i].city_name);
+      }
+
+      res.send(JSONObject);
+    })
+  .catch((error) => {
+      console.log(error);
     });
 });
 
