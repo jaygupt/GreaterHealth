@@ -23,15 +23,7 @@
         <input class="form-control" type="text" id="city" name="city" placeholder="San Francisco">
       </div>
 
-      <div class="form-group">
-        <label for="state">State</label>
-        <select class="form-select" aria-label="Select a State" name="state" id="state">
-          <option selected value="<%= longStateNames[0]; %>"><%= longStateNames[0]; %></option>
-          <% for (var i = 1; i < 50; i++) { %>
-            <option value="<%= longStateNames[i]; %>"><%= longStateNames[i]; %></a>
-          <% } %>
-        </select> 
-      </div>
+      <%- include('../partials/stateDropdown'); %>
 
       <fieldset class="form-group">
         <label for="hotuos">History of Tobacco Use or Smoking</label>
