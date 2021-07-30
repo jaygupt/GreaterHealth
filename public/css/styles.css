@@ -18,7 +18,7 @@ form h4 {
   margin-top: 10px;
 }
 
-.form-control {
+.form-control, .form-select {
   width: 12.5%;
 }
 
