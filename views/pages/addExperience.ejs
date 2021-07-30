@@ -21,10 +21,23 @@
         <input class="form-control" type="text" id="city" name="city" placeholder="San Francisco">
       </div>
 
+      <!--
+        <% var i = 0; %>
+          <% for (var tableRowCount = 0; tableRowCount < 10; tableRowCount++) { %>
+            <tr>
+              <% for (var tableData = 0; tableData < 5; tableData++) { %>
+                
+                <td><a href="/states/<%= longStateNames[i]; %>"><%= longStateNames[i]; %></a></td>
+                <% i++; %>
+              <% } %>
+            </tr>
+          <% } %>
+      -->
+
       <div class="form-group">
         <label for="state">State</label><br />
         <select name="state" id="state">
-          <option value="" selected="selected"> Alabama</option>
+          <option value=StateName selected="selected"> StateName</option>
           <option value="" selected="selected">Alaska  </option>
           <option value="" selected="selected">Arizona  </option>
           <option value="" selected="selected">Arkansas  </option>

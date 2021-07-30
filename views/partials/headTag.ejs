@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/bootstrapCSS/bootstrap.css">
 
 <!--Bootstrap JS-->
-<script src="/bootstrapJS/bootstrap.js"></script>
+<script src="/bootstrapJS/bootstrap.bundle.js"></script>
 
 <!--Standard CSS (across all pages)-->
 <link rel="stylesheet" href="/css/styles.css">
@@ -15,10 +15,3 @@
 
 <!--Page Title-->
 <title><%= typeof title != 'undefined' ? title : 'GreaterHealth' %></title>
-
-<!--Enable State Dropdown on Navbar-->
-<script>
-  $(document).ready(function(){
-    $('.dropdown-toggle').dropdown()
-  });
-</script>
