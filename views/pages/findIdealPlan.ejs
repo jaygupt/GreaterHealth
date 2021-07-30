@@ -34,10 +34,10 @@
         </div>
       </fieldset>
 
-      <div class="form-group">
-        <label for="surgeryOrMedNeeded">Surgery/Medication Needed</label>
-        <input class="form-control" type="text" id="surgeryOrMedNeeded" name="surgeryOrMedNeeded">
-      </div>
+      <%- include('../partials/dropDownofSurgeries', {
+        inputLabelAndAriaLabel: 'Surgery Needed',
+        labelAndNameAndID: 'surgeryNeeded'
+      }); %>
 
       <fieldset class="form-group">
         <label for="iofn">Individual or Family Network:</label>
@@ -123,7 +123,7 @@
             <td>${sameCityAndState[key].deductible}</td>
             <td>${sameCityAndState[key].copay}</td>
           </tr>`;
-          
+
           sameCityAndStateCounter++;
         }
       

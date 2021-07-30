@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label for="<%= labelAndNameAndID %>"><%= inputLabelAndAriaLabel %> (Pick Multiple if You Wish)</label>
+  <select class="form-select" aria-label="<%= inputLabelAndAriaLabel %>" name="<%= labelAndNameAndID %>" id="<%= labelAndNameAndID %>" multiple>
+    <% surgeryLength = surgeries.length %>
+    <% for (var i = 0; i < surgeryLength; i++) { %>
+      <option value="<%= surgeries[i]; %>"><%= surgeries[i]; %></option>
+    <% } %>
+  </select> 
+</div>

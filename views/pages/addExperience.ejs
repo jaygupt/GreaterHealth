@@ -32,15 +32,10 @@
         </div>
       </fieldset>
 
-      <div class="form-group">
-        <label for="prevSurgeries">Previous Surgeries</label>
-        <select class="form-select" aria-label="Previous Surgeries" name="prevSurgeries" id="prevSurgeries" multiple>
-          <% surgeryLength = surgeries.length %>
-          <% for (var i = 0; i < surgeryLength; i++) { %>
-            <option value="<%= surgeries[i]; %>"><%= surgeries[i]; %></option>
-          <% } %>
-        </select> 
-      </div>
+      <%- include('../partials/dropDownofSurgeries', {
+        inputLabelAndAriaLabel: 'Previous Surgeries',
+        labelAndNameAndID: 'prevSurgeries'
+      }); %>
 
       <div class="form-group">
         <label for="oopCost">Out of Pocket Cost After Insurance ($)</label>

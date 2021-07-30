@@ -120,7 +120,8 @@ app.get("/addExperience", (req, res) => {
 app.get("/findIdealPlan", (req, res) => {
   res.render("pages/findIdealPlan", {
     pageName: "findIdealPlan",
-    longStateNames: longStateNames
+    longStateNames: longStateNames,
+    surgeries: surgeries
   });
 });
 
