@@ -69,6 +69,27 @@ let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' 
       'UT' : 'Utah', 'VT' : 'Vermont', 'VA' : 'Virginia', 'WA' : 'Washington', 'WV' : 'West Virginia', 
       'WI' : 'Wisconsin', 'WY' : 'Wyoming'};
 
+var surgeries = ['Abdominal surgery', 'Abdominoplasty', 
+  'Acromioplasty', 'Adenoidectomy', 'Amputation', 'Angioplasty', 
+  'Appendicectomy', 'Arthrodesis', 'Arthroplasty', 'Arthroscopy', 
+  'Bilateral cingulotomy', 'Biopsy', 'Neurosurgery', 'Cauterization', 
+  'Cesarean section', 'Cholecystectomy', 'Circumcision', 'Colostomy', 
+  'Commissurotomy', 'Cordotomy', 'Corneal transplantation', 'Discectomy', 
+  'Episiotomy', 'Endarterectomy', 'Endoscopic thoracic sympathectomy', 'Foreskin restoration', 
+  'Fistulotomy', 'Frenectomy', 'Gastrectomy', 'Grafting', 'Heart transplantation', 
+  'Hemicorporectomy', 'Hemilaminectomy', 'Hemorrhoidectomy', 'Hepatectomy', 
+  'Hernia repair', 'Hypnosurgery', 'Hysterectomy', 'Kidney transplantation', 
+  'Khyphoplasty', 'Laminectomy', 'Laparoscopy', 'Laparotomy', 'Laryngectomy', 
+  'Lithotripsy', 'Lobotomy', 'Lumpectomy', 'Lung transplantation', 'Mammoplasty', 
+  'Mastectomy', 'Mastoidectomy', 'Myotomy', 'Mryingotomy', 'Nephrectomy', 
+  'Nissen fundoplication', 'Oophorectomy', 'Orchidectomy', 'Pancreaticoduodenectomy', 
+  'Parathyroidectomy', 'Penectomy', 'Phalloplasty', 'Pleurodesis', 'Pneumonectomy', 
+  'Prostatectomy', 'Psychosurgery', 'Radiosurgery', 'Sphincterotomy', 'Splenectomy', 
+  'Stapedectomy', 'Thoracotomy', 'Thrombectomy', 'Thymectomy', 'Thyroidectomy', 'Tonsillectomy', 
+  'Tracheotomy', 'Tracheostomy', 'Tubal ligation', 'Tubal reversal', 
+  'Ulnar Collateral Ligament Reconstruction', 'Ureterosigmoidostomy', 'Vaginectomy', 
+  'Vasectomy', 'Vivisection', 'Vulvectomy'];
+
 // longStateNames will be array of the values of stateLongName JSON object
 let longStateNames = [];
 for(let key of Object.keys(stateLongName)) {
@@ -90,7 +111,8 @@ app.get("/addExperience", (req, res) => {
   // full path: views/pages/addExperience.ejs
   res.render("pages/addExperience", {
     pageName: "addExperience",
-    longStateNames: longStateNames
+    longStateNames: longStateNames,
+    surgeries: surgeries
   });
 });
 

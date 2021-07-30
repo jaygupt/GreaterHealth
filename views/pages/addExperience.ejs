@@ -34,12 +34,17 @@
 
       <div class="form-group">
         <label for="prevSurgeries">Previous Surgeries</label>
-        <input class="form-control" type="text" id="prevSurgeries" name="prevSurgeries" placeholder="Meniscus Repair">
+        <select class="form-select" aria-label="Previous Surgeries" name="prevSurgeries" id="prevSurgeries" multiple>
+          <% surgeryLength = surgeries.length %>
+          <% for (var i = 0; i < surgeryLength; i++) { %>
+            <option value="<%= surgeries[i]; %>"><%= surgeries[i]; %></option>
+          <% } %>
+        </select> 
       </div>
 
       <div class="form-group">
         <label for="oopCost">Out of Pocket Cost After Insurance ($)</label>
-        <input class="form-control" type="number" id="oopCost" name="oopCost" step=".01" placeholder="$1000">
+        <input class="form-control" type="number" id="oopCost" name="oopCost" step=".01" placeholder="1000">
       </div>
 
       <h4>Hospital Information</h4>
@@ -92,17 +97,17 @@
 
       <div class="form-group">
         <label for="premium">Premium ($)</label>
-        <input class="form-control" type="number" id="premium" name="premium" step=".01" placeholder="$200">
+        <input class="form-control" type="number" id="premium" name="premium" step=".01" placeholder="200">
       </div>
 
       <div class="form-group">
         <label for="deductible">Deductible ($)</label>
-        <input class="form-control" type="number" id="deductible" name="deductible" step=".01" placeholder="$5000">
+        <input class="form-control" type="number" id="deductible" name="deductible" step=".01" placeholder="5000">
       </div>
 
       <div class="form-group">
         <label for="copay">Copay ($)</label>
-        <input class="form-control" type="number" id="copay" name="copay" step=".01" placeholder="$25">
+        <input class="form-control" type="number" id="copay" name="copay" step=".01" placeholder="25">
       </div>
 
       <button class="btn btn-success" type="submit">Submit!</button>

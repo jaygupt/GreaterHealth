@@ -22,6 +22,10 @@ form h4 {
   width: 12.5%;
 }
 
+#prevSurgeries {
+  width: 22.5%;
+}
+
 .form-check-label {
   margin-top: 0;
 }
