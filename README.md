@@ -11,8 +11,8 @@ To run the project on your computer:
 To add a new page:
 1. The page must have a .ejs extension. Furthermore, it must be put in the views/pages directory. 
 2. In the head tag, use: `<%- include('../partials/headTag', {title: "Title of the Page"}); %>`. In the title key-value pair, put the title of the page in quotes as the value of the pair. If you would like to have an additional css file specifically for the new page, use the following format: `<link rel="stylesheet" href="/css/{CSS File}">`.
-3. In the body tag, use the header tag (`<header></header>`) to enclose the header partial: `<%- include('../partials/header'); %>`. As of now, this contains the navbar.
-4. Likewise, before you put the enclosing body tag, use the footer tag (`<footer></footer>`) to enclose the footer partial: `<%- include('../partials/footer'); %>`. As of now, this contains the footer.
+3. In the body tag, include the header partial: `<%- include('../partials/header'); %>`. As of now, this contains the navbar.
+4. Likewise, before you put the enclosing body tag, include the footer partial: `<%- include('../partials/footer'); %>`. As of now, this contains the footer.
 5. Be sure to add a get route in index.js, as well as a navbar link item for your new page.
 
 To reference a file in the public folder: Use /css, /images, or /js (see middleware in index.js).
