@@ -69,6 +69,7 @@ let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' 
       'UT' : 'Utah', 'VT' : 'Vermont', 'VA' : 'Virginia', 'WA' : 'Washington', 'WV' : 'West Virginia', 
       'WI' : 'Wisconsin', 'WY' : 'Wyoming'};
 
+// scraped from https://www.wikidoc.org/index.php/List_of_surgical_procedures (see webscraper.py)
 var surgeries = ['Abdominal surgery', 'Abdominoplasty', 
   'Acromioplasty', 'Adenoidectomy', 'Amputation', 'Angioplasty', 
   'Appendicectomy', 'Arthrodesis', 'Arthroplasty', 'Arthroscopy', 
