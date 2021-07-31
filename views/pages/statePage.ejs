@@ -70,6 +70,60 @@
       </table> 
     </div>
 
+    <!-- Experiences in this State -->
+    <!-- Uses EJS to go through responseFromExperiencesInState to populate Experience Tables -->
+    <div class="table-responsive">
+      <table class="table table-hover caption-top aTable">
+        <caption>Experiences in this State</caption>
+        <thead>
+          <th scope="col"></th>
+          <th scope="col">Age</th>
+          <th scope="col">City of Residence</th>
+          <th scope="col">History of Tobacco Use or Smoking</th>
+          <th scope="col">Previous Surgeries</th>
+          <th scope="col">Out of Pocket Cost After Insurance</th>
+          <th scope="col">Hospital Name</th>
+          <th scope="col">Hospital City</th>
+          <th scope="col">In or Out of Network</th>
+          <th scope="col">Insurance Company</th>
+          <th scope="col">Individual or Family Network</th>
+          <th scope="col">Plan Category</th>
+          <th scope="col">Premium</th>
+          <th scope="col">Deductible</th>
+          <th scope="col">Copay</th>
+        </thead>
+        <tbody>
+          <% for (var key in responseFromExperiencesInState) { %>
+          <tr>
+            <th scope="row"><%= (parseInt(key) + 1) %></th>
+            <td><%= responseFromExperiencesInState[key].age %></td>
+            <td><%= responseFromExperiencesInState[key].city %></td>
+            <td><%= responseFromExperiencesInState[key].hotuos %></td>
+            <td>
+            <% if (Array.isArray(responseFromExperiencesInState[key].prevSurgeries)) { %>
+              <% for (var surgeryIndex in responseFromExperiencesInState[key].prevSurgeries) { %>
+                <%= responseFromExperiencesInState[key].prevSurgeries[surgeryIndex] %>
+              <% } %>
+            <% } else { %>
+              <%= responseFromExperiencesInState[key].prevSurgeries %>
+            <% } %>
+            </td>
+            <td><%= responseFromExperiencesInState[key].oopCost %></td>
+            <td><%= responseFromExperiencesInState[key].hospitalName %></th>
+            <td><%= responseFromExperiencesInState[key].hospitalCity %></th>
+            <td><%= responseFromExperiencesInState[key].iooon %></th>
+            <td><%= responseFromExperiencesInState[key].companyName %></th>
+            <td><%= responseFromExperiencesInState[key].iofn %></th>
+            <td><%= responseFromExperiencesInState[key].planCategory %></th>
+            <td><%= responseFromExperiencesInState[key].premium %></th>
+            <td><%= responseFromExperiencesInState[key].deductible %></th>
+            <td><%= responseFromExperiencesInState[key].copay %></th>
+          </tr>
+          <% } %>
+        </tbody>
+      </table> 
+    </div>
+
     <%- include('../partials/contributeButton'); %>
 
     <%- include('../partials/footer'); %>

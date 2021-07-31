@@ -125,15 +125,54 @@ app.get("/findIdealPlan", (req, res) => {
   });
 });
 
+// queries Realtime Database for experiences in that state
+function experiencesInState(theState) {
+  return new Promise((resolve, reject) => {
+    dbRef.child("experiences").get().then((snapshot) => {
+      if (snapshot.exists) {
+        var counter = 0;
+        var experiencesInState = {};
+
+        // snapValue is the data in experiences
+        var snapValue = snapshot.val();
+
+        // loop through each user (represented by userID) in snapValue
+        for (user in snapValue) {
+          // if the requested state matches with a state in the database, store it in experiencesInState
+          if (theState == snapValue[user].state) {
+            experiencesInState[counter] = snapValue[user];
+            counter++;
+          }
+        }
+
+        return resolve(experiencesInState);
+      } else {
+        // snapshot doesn't exist
+        console.log("Snapshot doesn't exist.");
+      }
+    }).catch(error => {
+      // if error, log it to console
+      return reject(error);
+    });
+  });
+}
+
 // Individual State Page
 app.get("/states/:stateName", (req, res) => {
   const stateName = req.params.stateName;
-  
-  res.render("pages/statePage", {
-    state: stateName,
-    longStateNames: longStateNames,
-    pageName: "state"
-  });
+
+  experiencesInState(stateName)
+    .then((responseFromExperiencesInState) => {
+      res.render("pages/statePage", {
+        state: stateName,
+        longStateNames: longStateNames,
+        pageName: "state",
+        responseFromExperiencesInState: responseFromExperiencesInState
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 // write to realtime-database's experiences route
