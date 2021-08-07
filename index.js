@@ -35,28 +35,20 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 // ---Firebase---
-var firebase = require("firebase/app");
+var admin = require("firebase-admin"); // for using admin SDK
+var serviceAccount = require("./serviceAccountKey.json"); // admin credentials for full read & write access
 
 // Add Firebase products that will be used here
 require("firebase/database");
 
-var firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  databaseURL: process.env.databaseURL,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId
-};
-
 // initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebase = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.databaseURL
+});
 
 // get reference to database service
 var database = firebase.database();
-
 const dbRef = database.ref();
 
 let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 

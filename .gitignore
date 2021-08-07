@@ -118,6 +118,6 @@ dist
 .pnp.*
 
 # Firebase
-admin.json
+serviceAccountKey.json
 
 .DS_Store
