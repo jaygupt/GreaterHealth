@@ -200,23 +200,55 @@ function writeUserDataToExperiences(userData) {
   // generate a unique userID
   const userId = uuidv4();
 
-  database.ref('experiences/' + userId).set({
-    age: userData.age,
-    city: userData.city,
-    state: userData.state,
-    hotuos: userData.hotuos,
-    prevSurgeries: userData.prevSurgeries,
-    oopCost: userData.oopCost,
-    hospitalName: userData.hospitalName,
-    hospitalCity: userData.hospitalCity,
-    iooon: userData.iooon,
-    companyName: userData.companyName,
-    iofn: userData.iofn,
-    planCategory: userData.planCategory,
-    premium: userData.premium,
-    deductible: userData.deductible,
-    copay: userData.copay
-  });
+  // city and state that person is from
+  var zipTasticObjectOfPerson = 
+    queryZiptasticAPI(userData.zipCode)
+      .then(responseFromQueryZiptasticAPI => {
+        return responseFromQueryZiptasticAPI;
+      })
+      .catch(errorFromQueryZiptasticAPI => {
+        console.log(errorFromQueryZiptasticAPI);
+      });
+  
+  // city and state that hospital is located in
+  var zipTasticObjectOfHospital = 
+    queryZiptasticAPI(userData.hospitalZipCode)
+      .then(responseFromQueryZiptasticAPI => {
+        return responseFromQueryZiptasticAPI;
+      })
+      .catch(errorFromQueryZiptasticAPI => {
+        console.log(errorFromQueryZiptasticAPI);
+      });
+
+  zipTasticObjectOfPerson
+    .then(personCityAndState => {
+      zipTasticObjectOfHospital
+        .then(hospitalCityAndState => {
+          database.ref('experiences/' + userId).set({
+            age: userData.age,
+            city: personCityAndState.city,
+            state: personCityAndState.state,
+            hotuos: userData.hotuos,
+            prevSurgeries: userData.prevSurgeries,
+            oopCost: userData.oopCost,
+            hospitalName: userData.hospitalName,
+            hospitalCity: hospitalCityAndState.city,
+            iooon: userData.iooon,
+            companyName: userData.companyName,
+            iofn: userData.iofn,
+            planCategory: userData.planCategory,
+            premium: userData.premium,
+            deductible: userData.deductible,
+            copay: userData.copay
+          });
+        })
+        .catch(errorFromZipTasticObjectOfHospital => {
+          console.log(errorFromZipTasticObjectOfHospital)
+        });
+    })
+    .catch(errorFromZipTasticObjectOfPerson => {
+      console.log(errorFromZipTasticObjectOfPerson);
+    });
 }
 
 // when addExperience.ejs's form is submitted, goes to this route
@@ -277,21 +309,30 @@ function queryZiptasticAPI(zipCode) {
       .then((res) => {
         var stateAndCity = res.data;
 
-        // put city in proper case (each word's first letter capitalized)
-        var city = stateAndCity.city;
-        city = city.toLowerCase();
-        var arrayOfWords = city.split(" ");
-        for (var i = 0; i < arrayOfWords.length; i++) {
-            arrayOfWords[i] = arrayOfWords[i][0].toUpperCase() + arrayOfWords[i].substr(1);
-        }
-        city = arrayOfWords.join(" ");
-        stateAndCity.city = city;
-        
-        // put state in long form (not two letters)
-        var state = stateLongName[stateAndCity.state];
-        stateAndCity.state = state;
+        // if zip code is found (no error key/value pair)
+        if (!stateAndCity.error) {
+          // put city in proper case (each word's first letter capitalized)
+          var city = stateAndCity.city;
+          city = city.toLowerCase();
+          var arrayOfWords = city.split(" ");
+          for (var i = 0; i < arrayOfWords.length; i++) {
+              arrayOfWords[i] = arrayOfWords[i][0].toUpperCase() + arrayOfWords[i].substr(1);
+          }
+          city = arrayOfWords.join(" ");
+          stateAndCity.city = city;
+          
+          // put state in long form (not two letters)
+          var state = stateLongName[stateAndCity.state];
+          stateAndCity.state = state;
 
-        resolve(stateAndCity);
+          resolve(stateAndCity);
+        } else {
+          // if zipcode not found, return N/A for city and state
+          resolve({
+            city: "N/A",
+            state: "N/A"
+          });
+        }
       })
       .catch((err) => {
         reject(err);

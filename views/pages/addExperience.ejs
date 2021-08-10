@@ -13,6 +13,8 @@
 
       <%- include('../partials/ageInput'); %>
 
+      <%- include('../partials/zipCodeInput'); %>
+
       <%- include('../partials/hotuosInput'); %>
 
       <%- include('../partials/dropDownofSurgeries', {
@@ -33,8 +35,8 @@
       </div>
 
       <div class="form-group">
-        <label for="hospitalCity">City</label>
-        <input class="form-control" type="text" id="hospitalCity" name="hospitalCity" placeholder="Daly City">
+        <label for="hospitalZipCode">Hospital's Zip Code</label>
+        <input class="form-control" type="number" id="hospitalZipCode" name="hospitalZipCode" placeholder="94016" required>
       </div>
 
       <fieldset class="form-group">
