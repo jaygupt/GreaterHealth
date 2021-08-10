@@ -12,7 +12,8 @@ const axios = require('axios');
 const express = require('express');
 const app = express(); // app is instance of express() method
 
-// port is set to the environment variable, or 5000 if the environment variable isn't present
+// port is set to the environment variable that Heroku designates, 
+// or 5000 if the environment variable isn't present
 const port = process.env.PORT || 5000;
 const path = require("path");
 
@@ -38,7 +39,20 @@ app.set('view engine', 'ejs');
 
 // ---Firebase---
 var admin = require("firebase-admin"); // for using admin SDK
-var serviceAccount = require("./serviceAccountKey.json"); // admin credentials for full read & write access
+
+// admin credentials for full read & write access to Firebase Realtime Database
+var serviceAccount = {
+  "type": process.env.serviceAccountType,
+  "project_id": process.env.serviceAccountProjectID,
+  "private_key_id": process.env.serviceAccountPrivateKeyID,
+  "private_key": process.env.serviceAccountPrivateKey.replace(/\\n/g, '\n'),
+  "client_email": process.env.serviceAccountClientEmail,
+  "client_id": process.env.serviceAccountClientID,
+  "auth_uri": process.env.serviceAccountAuthURI,
+  "token_uri": process.env.serviceAccountTokenURI,
+  "auth_provider_x509_cert_url": process.env.serviceAccountAuthProviderX509CertURL,
+  "client_x509_cert_url": process.env.serviceAccountClientX509CertURL
+}
 
 // Add Firebase products that will be used here
 require("firebase/database");
