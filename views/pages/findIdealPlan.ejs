@@ -8,7 +8,7 @@
     <%- include('../partials/header'); %>
 
     <h1>Find My Ideal Plan</h1>
-    <h3>Fill out the information below, and click "Find me a Plan!" to see competitive offers in your area.</h3>
+    <h3>Fill out the information below, and click "Find me a Plan!" to view competitive offers in your area.</h3>
 
     <form id="findPlanForm">
       <%- include('../partials/zipCodeInput'); %>
@@ -368,11 +368,12 @@
         </div>
         `;
 
-        return `${theHTML}`;
+        return theHTML;
       }
 
       // triggers when the form is submitted
       $("#findPlanForm").submit(function(event) {
+        // prevent form from reloading page
         event.preventDefault();
 
         // ajaxRequest to send inputted data to server
@@ -381,7 +382,7 @@
           type: 'post',
           data: $('#findPlanForm').serialize()
         }).done(response => {
-          // show them the data based on their responses
+          // show them the data in result div based on their responses
           if (response) {
             $("#result").html(returnFromExperiences(response.city, response.state, response.queryExperiences));
           } else {
@@ -402,6 +403,7 @@
         }).done(response => {
           // append public API data
           if (response) {
+            // .append() in order to add to result div
             $("#result").append(returnMarketplaceData(response.apiData, response.state));
           } else {
             // error in response

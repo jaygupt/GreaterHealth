@@ -374,6 +374,7 @@ app.post("/findIdealPlan", (req, res) => {
     });
 });
 
+// configure value of "place" key when calling Marketplace API
 function getPlaceValue(zipcode) {
   return new Promise((resolve, reject) => {
     var placeValue = {};
@@ -441,12 +442,15 @@ app.post("/marketplaceapi", (request, response) => {
     })
     .then(res => {
       // success: API returned JSON object containing plans
+
+      // send the API's data & the full name of the state using a JSON object
       response.send({
         "apiData": res.data,
         "state": stateLongName[thePlaceValue.state]
       });
     })
     .catch(err => {
+      // if any error when calling API, log it to console
       console.log(err);
     });
   });
