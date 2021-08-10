@@ -11,7 +11,9 @@ const axios = require('axios');
 
 const express = require('express');
 const app = express(); // app is instance of express() method
-const port = process.env.PORT;
+
+// port is set to the environment variable, or 5000 if the environment variable isn't present
+const port = process.env.PORT || 5000;
 const path = require("path");
 
 // ---Middleware---
