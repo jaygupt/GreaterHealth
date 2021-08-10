@@ -11,13 +11,112 @@
     <h3>Fill out the information below, and click "Find me a Plan!" to see competitive offers in your area.</h3>
 
     <form id="findPlanForm">
-      <h4>Personal Information</h4>
-
-      <%- include('../partials/ageInput'); %>
-
       <%- include('../partials/zipCodeInput'); %>
 
-      <%- include('../partials/hotuosInput'); %>
+      <div class="form-group">
+        <label for="income">Income:</label>
+        <input 
+          class="form-control"
+          id="income" 
+          name="income" 
+          type="number" 
+          step="0.01" 
+          placeholder="0.00" 
+          required>
+      </div>
+
+      <fieldset class="form-group">
+        <label for="aptc_eligible">Are you APTC Eligible?</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="yes" name="aptc_eligible" value="true" required>
+          <label class="form-check-label" for="yes">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="no" name="aptc_eligible" value="false">
+          <label class="form-check-label" for="no">No</label>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input class="form-control" type="date" id="dob" name="dob" required>
+      </div>
+
+      <fieldset class="form-group">
+        <label for="gender">Gender:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="male" name="gender" value="Male" required>
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="female" name="gender" value="Female">
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group" id="isFemale" style="display:none">
+        <label for="is_pregnant">Are you Pregnant?</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="isPregnant" name="is_pregnant" value="true">
+          <label class="form-check-label" for="isPregnant">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="notPregnant" name="is_pregnant" value="false" checked>
+          <label class="form-check-label" for="notPregnant">No</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="is_parent">Are you a Parent?</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="isParent" name="is_parent" value="true" required>
+          <label class="form-check-label" for="isParent">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="notParent" name="is_parent" value="false">
+          <label class="form-check-label" for="notParent">No</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="has_married_couple">Are you Currently Married?</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="isMarried" name="has_married_couple" value="true" required>
+          <label class="form-check-label" for="isMarried">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="notMarried" name="has_married_couple" value="false">
+          <label class="form-check-label" for="notMarried">No</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="uses_tobacco">Do you use Tobacco?</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="usesTobacco" name="uses_tobacco" value="true" required>
+          <label class="form-check-label" for="usesTobacco">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="noTobacco" name="uses_tobacco" value="false">
+          <label class="form-check-label" for="noTobacco">No</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="utilization_level">Intended Health Plan Utilization Level:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="high" name="utilization_level" value="High" required>
+          <label class="form-check-label" for="high">High</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="medium" name="utilization_level" value="Medium">
+          <label class="form-check-label" for="medium">Medium</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="low" name="utilization_level" value="Low">
+          <label class="form-check-label" for="low">Low</label>
+        </div>
+      </fieldset>
 
       <%- include('../partials/dropDownofSurgeries', {
         inputLabelAndAriaLabel: 'Surgery Needed',
@@ -32,6 +131,17 @@
     <div id="result"></div>
 
     <script>
+      $(document).ready(() => {
+        // show "Are you Pregnant?" question depending on answer to gender
+        $("#female").click(() => {
+          $("#isFemale").show();
+        });
+
+        $("#male").click(() => {
+          $("#isFemale").hide();
+        })
+      });
+
       function returnFromExperiences(theCity, theState, fromExperiences) {
         // counter for tables
         var sameCityAndStateCounter = 1;
@@ -184,34 +294,73 @@
         return `${theHTML}`;
       }
 
-      function returnStatePlans(theState) {
+      function returnMarketplaceData(theData, theState) {
         var theHTML = `<div class="table-responsive">
           <table class="table table-hover caption-top aTable">
-            <caption>Publicly Available Data on Plans in ${theState}:</caption>
+            <caption>Publicly Available Data on Plans in ${theState} (Marketplace API Data):</caption>
             <thead>
               <tr>
                 <th scope="col"></th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Benefit Types</th>
+                <th scope="col">Benefits URL</th>
+                <th scope="col">Brochure URL</th>
+                <th scope="col">Deductible Type</th>
+                <th scope="col">Deductible Amount</th>
+                <th scope="col">Disease Management Programs</th>
+                <th scope="col">Issuer</th>
+                <th scope="col">Metal Level</th>
+                <th scope="col">Max Out of Pocket for Medical & Drug EHB Benefits (Total)</th>
+                <th scope="col">Out of Pocket Cost</th>
                 <th scope="col">Premium</th>
-                <th scope="col">Deductible</th>
-                <th scope="col">Copay</th>
-                <th scope="col">Category</th>
-                <th scope="col">% Enrolled</th>
+                <th scope="col">Enrollee Experience Rating</th>
+                <th scope="col">Efficiency Rating</th>
+                <th scope="col">Type</th>
               </tr>
             </thead>
             <tbody>`;
+
+        var arrayOfPlans = theData.plans;
         
-        // for (var key in fromStates) {
-        //   theHTML += `
-        //     <tr>
-        //       <th scope="row">${key}</th>
-        //       <td>${fromStates[key].premium}</td>
-        //       <td>${fromStates[key].deductible}</td>
-        //       <td>${fromStates[key].copay}</td>
-        //       <td>${fromStates[key].category}</td>
-        //       <td>${fromStates[key].percentEnrolled}</td>
-        //     </tr>
-        //   `;
-        // }
+        // loop through each plan, displaying its attributes
+        for (var key in arrayOfPlans) {
+          theHTML += `
+            <tr>
+              <th scope="row">${parseInt(key) + 1}</th>
+              <td>${arrayOfPlans[key].id}</td>
+              <td>${arrayOfPlans[key].name}</td>
+              <td>`;
+
+          for (var i = 0; i < arrayOfPlans[key].benefits.length; i++) {
+            theHTML += `${arrayOfPlans[key].benefits[i].name}<br/><br/>`;
+          }
+              
+          theHTML += `
+              </td>
+              <td><a href="${arrayOfPlans[key].benefits_url}">Benefits</a></td>
+              <td><a href="${arrayOfPlans[key].brochure_url}">Brochure</a></td>
+              <td>${arrayOfPlans[key].deductibles[0].type}</td>
+              <td>${arrayOfPlans[key].deductibles[0].amount}</td>
+              <td>`;
+
+          for (var i = 0; i < arrayOfPlans[key].disease_mgmt_programs.length; i++) {
+            theHTML += `${arrayOfPlans[key].disease_mgmt_programs[i]}<br/>`;
+          }
+            
+          theHTML += `
+              </td>
+              <td>${arrayOfPlans[key].issuer.name}</td>
+              <td>${arrayOfPlans[key].metal_level}</td>
+              <td>${arrayOfPlans[key].moops[0].amount}</td>
+              <td>${arrayOfPlans[key].oopc}</td>
+              <td>${arrayOfPlans[key].premium}</td>
+              <td>${arrayOfPlans[key].quality_rating.enrollee_experience_rating}</td>
+              <td>${arrayOfPlans[key].quality_rating.plan_efficiency_rating}</td>
+              <td>${arrayOfPlans[key].type}</td>
+            </tr>
+          `;
+        }
 
         theHTML += `
             </tbody>
@@ -231,17 +380,35 @@
           url: "/findIdealPlan",
           type: 'post',
           data: $('#findPlanForm').serialize()
-        }).done((response) => {
+        }).done(response => {
           // show them the data based on their responses
           if (response) {
             $("#result").html(returnFromExperiences(response.city, response.state, response.queryExperiences));
-            $("#result").append(returnStatePlans(response.state));
           } else {
             // error in response
             console.log("Error in Response!");
           }
         }).fail(() => {
           $("#result").html("<h1>Error! Did you Enter Your Information Correctly?</h1>");
+        });
+      });
+
+      // separate block of code for getting Marketplace API data
+      $("#findPlanForm").submit(function(event) {
+        var ajaxRequest = $.ajax({
+          url: "/marketplaceapi",
+          type: 'post',
+          data: $('#findPlanForm').serialize()
+        }).done(response => {
+          // append public API data
+          if (response) {
+            $("#result").append(returnMarketplaceData(response.apiData, response.state));
+          } else {
+            // error in response
+            console.log("Error in Response!");
+          }
+        }).fail(() => {
+          console.log("Something went wrong!");
         });
       });
     </script>

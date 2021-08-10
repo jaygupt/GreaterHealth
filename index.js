@@ -51,6 +51,8 @@ const firebase = admin.initializeApp({
 var database = firebase.database();
 const dbRef = database.ref();
 
+const marketplaceAPIKey = process.env.marketplaceAPIKey;
+
 let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' : 'Arkansas', 'CA' : 'California', 'CO' : 'Colorado', 'CT' : 'Connecticut', 'DE' : 'Delaware', 'FL' : 'Florida', 'GA' : 'Georgia', 'HI' : 'Hawaii', 'ID' : 'Idaho', 'IL' : 'Illinois', 'IN' : 'Indiana', 'IA' : 'Iowa', 'KS' : 'Kansas', 
       'KY' : 'Kentucky', 'LA' : 'Louisiana', 'ME' : 'Maine', 'MD' : 'Maryland', 
       'MA' : 'Massachusetts', 'MI' : 'Michigan', 'MN' : 'Minnesota', 'MS' : 'Mississippi', 
@@ -370,6 +372,84 @@ app.post("/findIdealPlan", (req, res) => {
     .catch((errorFromZipTasticObject) => {
       console.log(errorFromZipTasticObject);
     });
+});
+
+function getPlaceValue(zipcode) {
+  return new Promise((resolve, reject) => {
+    var placeValue = {};
+
+    placeValue["zipcode"] = zipcode;
+
+    axios.get(`https://marketplace.api.healthcare.gov/api/v1/counties/by/zip/${zipcode}?apikey=${marketplaceAPIKey}`)
+      .then((res) => {
+        var mainInfo = res.data.counties[0];
+        placeValue["countyfips"] = mainInfo.fips;
+        placeValue["state"] = mainInfo.state;
+        return resolve(placeValue);
+      })
+      .catch((err) => {
+        return reject(err);
+      });
+  });
+}
+
+app.post("/marketplaceapi", (request, response) => {
+  request.body.income = parseFloat(request.body.income);
+
+  // if gender is male, set is_pregnant to false
+  if (request.body.gender == "Male") {
+    request.body.is_pregnant = "false";
+  }
+
+  // value of place in Marketplace API call
+  var placeValue = "";
+
+  // use getPlaceValue function to get the value of the place attribute
+  placeValue = getPlaceValue(request.body.zipCode)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  
+  // use placeValue in the Marketplace API call
+  placeValue.then(thePlaceValue => {
+    axios.post(`https://marketplace.api.healthcare.gov/api/v1/plans/search?apikey=${marketplaceAPIKey}`, {
+      "household": {
+        "income": request.body.income,
+        "people": [
+          {
+            "aptc_eligible": request.body.aptc_eligible === true,
+            "dob": request.body.dob,
+            "has_mec": false,
+            "is_pregnant": request.body.is_pregnant === true,
+            "is_parent": request.body.is_parent === true,
+            "uses_tobacco": request.body.uses_tobacco === true,
+            "gender": request.body.gender,
+            "utilization_level": request.body.utilization_level
+          }
+        ],
+        "has_married_couple": request.body.has_married_couple === true
+      },
+      "market": "Individual",
+      "place": thePlaceValue,
+      "limit": 10,
+      "offset": 0,
+      "order": "asc",
+      "year": 2020
+    })
+    .then(res => {
+      // success: API returned JSON object containing plans
+      response.send({
+        "apiData": res.data,
+        "state": stateLongName[thePlaceValue.state]
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  });
 });
 
 // listen on the specified port
