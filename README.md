@@ -1,12 +1,10 @@
 # GreaterHealth
 
 To run the project on your computer:
-1. git clone https://github.com/{GITHUB USERNAME}/GreaterHealth.git to clone the repo
-  to your local machine.
+1. git clone https://github.com/{GITHUB USERNAME}/GreaterHealth.git to clone the repo to your local machine.
 2. in the terminal of the project directory, run `npm i` to install project dependencies.
-3. create a .env file in the project directory. In this file, you will have your 
-  project secrets, such as API keys. See the "usage" section of https://www.npmjs.com/package/dotenv for more information. For this project, set PORT to any port of your liking, and 
-  you can get the firebase configuration keys from GreaterHealth > Project Settings > SDK setup and configuration > Config
+3. create a .env file in the project directory. In this file, you will have your project secrets, such as API keys. See the "usage" section of https://www.npmjs.com/package/dotenv for more information. For this project, set PORT to any port of your liking, set databaseURL to the Realtime Database URL (can be found on Firebase Console), and set marketplaceAPIKey to the appropriate value.
+4. Get the Firebase configuration keys from GreaterHealth > Project Settings > SDK setup and configuration > Config. Call this file "serviceAccountKey.json", and place it in the same level as index.js.
 
 To add a new page:
 1. The page must have a .ejs extension. Furthermore, it must be put in the views/pages directory. 
