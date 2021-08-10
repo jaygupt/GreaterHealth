@@ -13,43 +13,18 @@
     <form id="findPlanForm">
       <h4>Personal Information</h4>
 
-      <div class="form-group">
-        <label for="age">Age</label>
-        <input class="form-control" type="number" id="age" name="age" placeholder="0">
-      </div>
+      <%- include('../partials/ageInput'); %>
 
-      <%- include('../partials/stateDropdown'); %>
+      <%- include('../partials/zipCodeInput'); %>
 
-      <%- include('../partials/cityDropdown'); %>
-
-      <fieldset class="form-group">
-        <label for="hotuos">History of Tobacco Use or Smoking</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" id="yes" name="hotuos" value="Yes">
-          <label class="form-check-label" for="yes">Yes</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" id="no" name="hotuos" value="No">
-          <label class="form-check-label" for="no">No</label>
-        </div>
-      </fieldset>
+      <%- include('../partials/hotuosInput'); %>
 
       <%- include('../partials/dropDownofSurgeries', {
         inputLabelAndAriaLabel: 'Surgery Needed',
         labelAndNameAndID: 'surgeryNeeded'
       }); %>
 
-      <fieldset class="form-group">
-        <label for="iofn">Individual or Family Network:</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" id="individual-network" name="iofn" value="Individual Network">
-          <label class="form-check-label" for="individual-network">Individual Network</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" id="family-network" name="iofn" value="Family Network">
-          <label class="form-check-label" for="family-network">Family Network</label>
-        </div>
-      </fieldset>
+      <%- include('../partials/iofnInput'); %>
 
       <button class="btn btn-success" type="submit">Find me a Plan!</button>
     </form>
@@ -209,7 +184,7 @@
         return `${theHTML}`;
       }
 
-      function returnStatePlans(theState, fromStates) {
+      function returnStatePlans(theState) {
         var theHTML = `<div class="table-responsive">
           <table class="table table-hover caption-top aTable">
             <caption>Publicly Available Data on Plans in ${theState}:</caption>
@@ -225,18 +200,18 @@
             </thead>
             <tbody>`;
         
-        for (var key in fromStates) {
-          theHTML += `
-            <tr>
-              <th scope="row">${key}</th>
-              <td>${fromStates[key].premium}</td>
-              <td>${fromStates[key].deductible}</td>
-              <td>${fromStates[key].copay}</td>
-              <td>${fromStates[key].category}</td>
-              <td>${fromStates[key].percentEnrolled}</td>
-            </tr>
-          `;
-        }
+        // for (var key in fromStates) {
+        //   theHTML += `
+        //     <tr>
+        //       <th scope="row">${key}</th>
+        //       <td>${fromStates[key].premium}</td>
+        //       <td>${fromStates[key].deductible}</td>
+        //       <td>${fromStates[key].copay}</td>
+        //       <td>${fromStates[key].category}</td>
+        //       <td>${fromStates[key].percentEnrolled}</td>
+        //     </tr>
+        //   `;
+        // }
 
         theHTML += `
             </tbody>
@@ -247,13 +222,8 @@
         return `${theHTML}`;
       }
 
+      // triggers when the form is submitted
       $("#findPlanForm").submit(function(event) {
-        // city that was inputted into form
-        var theCity = $("#city").val();
-        
-        // state that was inputted into form
-        var theState = $("#state").val();
-
         event.preventDefault();
 
         // ajaxRequest to send inputted data to server
@@ -261,11 +231,11 @@
           url: "/findIdealPlan",
           type: 'post',
           data: $('#findPlanForm').serialize()
-        }).done((res) => {
+        }).done((response) => {
           // show them the data based on their responses
-          if (res) {
-            $("#result").html(returnFromExperiences(theCity, theState, res.fromExperiences));
-            $("#result").append(returnStatePlans(theState, res.fromStates));
+          if (response) {
+            $("#result").html(returnFromExperiences(response.city, response.state, response.queryExperiences));
+            $("#result").append(returnStatePlans(response.state));
           } else {
             // error in response
             console.log("Error in Response!");

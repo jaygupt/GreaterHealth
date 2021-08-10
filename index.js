@@ -62,24 +62,24 @@ let stateLongName = { 'AL' : 'Alabama', 'AK' : 'Alaska', 'AZ' : 'Arizona', 'AR' 
       'WI' : 'Wisconsin', 'WY' : 'Wyoming'};
 
 // scraped from https://www.wikidoc.org/index.php/List_of_surgical_procedures (see webscraper.py)
-var surgeries = ['Abdominal surgery', 'Abdominoplasty', 
+var surgeries = ['Abdominal Surgery', 'Abdominoplasty', 
   'Acromioplasty', 'Adenoidectomy', 'Amputation', 'Angioplasty', 
   'Appendicectomy', 'Arthrodesis', 'Arthroplasty', 'Arthroscopy', 
-  'Bilateral cingulotomy', 'Biopsy', 'Neurosurgery', 'Cauterization', 
-  'Cesarean section', 'Cholecystectomy', 'Circumcision', 'Colostomy', 
-  'Commissurotomy', 'Cordotomy', 'Corneal transplantation', 'Discectomy', 
-  'Episiotomy', 'Endarterectomy', 'Endoscopic thoracic sympathectomy', 'Foreskin restoration', 
-  'Fistulotomy', 'Frenectomy', 'Gastrectomy', 'Grafting', 'Heart transplantation', 
+  'Bilateral Cingulotomy', 'Biopsy', 'Neurosurgery', 'Cauterization', 
+  'Cesarean Section', 'Cholecystectomy', 'Circumcision', 'Colostomy', 
+  'Commissurotomy', 'Cordotomy', 'Corneal Transplantation', 'Discectomy', 
+  'Episiotomy', 'Endarterectomy', 'Endoscopic Thoracic Sympathectomy', 'Foreskin Restoration', 
+  'Fistulotomy', 'Frenectomy', 'Gastrectomy', 'Grafting', 'Heart Transplantation', 
   'Hemicorporectomy', 'Hemilaminectomy', 'Hemorrhoidectomy', 'Hepatectomy', 
-  'Hernia repair', 'Hypnosurgery', 'Hysterectomy', 'Kidney transplantation', 
+  'Hernia Repair', 'Hypnosurgery', 'Hysterectomy', 'Kidney Transplantation', 
   'Khyphoplasty', 'Laminectomy', 'Laparoscopy', 'Laparotomy', 'Laryngectomy', 
-  'Lithotripsy', 'Lobotomy', 'Lumpectomy', 'Lung transplantation', 'Mammoplasty', 
+  'Lithotripsy', 'Lobotomy', 'Lumpectomy', 'Lung Transplantation', 'Mammoplasty', 
   'Mastectomy', 'Mastoidectomy', 'Myotomy', 'Mryingotomy', 'Nephrectomy', 
-  'Nissen fundoplication', 'Oophorectomy', 'Orchidectomy', 'Pancreaticoduodenectomy', 
+  'Nissen Fundoplication', 'Oophorectomy', 'Orchidectomy', 'Pancreaticoduodenectomy', 
   'Parathyroidectomy', 'Penectomy', 'Phalloplasty', 'Pleurodesis', 'Pneumonectomy', 
   'Prostatectomy', 'Psychosurgery', 'Radiosurgery', 'Sphincterotomy', 'Splenectomy', 
   'Stapedectomy', 'Thoracotomy', 'Thrombectomy', 'Thymectomy', 'Thyroidectomy', 'Tonsillectomy', 
-  'Tracheotomy', 'Tracheostomy', 'Tubal ligation', 'Tubal reversal', 
+  'Tracheotomy', 'Tracheostomy', 'Tubal Ligation', 'Tubal Reversal', 
   'Ulnar Collateral Ligament Reconstruction', 'Ureterosigmoidostomy', 'Vaginectomy', 
   'Vasectomy', 'Vivisection', 'Vulvectomy'];
 
@@ -118,7 +118,7 @@ app.get("/findIdealPlan", (req, res) => {
   });
 });
 
-// queries Realtime Database for experiences in that state
+// queries Realtime Database for experiences in that state (based on individual state page)
 function experiencesInState(theState) {
   return new Promise((resolve, reject) => {
     dbRef.child("experiences").get().then((snapshot) => {
@@ -224,11 +224,12 @@ app.post("/addExperience", (req, res) => {
   // write the user's data to the firebase realtime database
   writeUserDataToExperiences(req.body);
 
-  // go back to form
+  // go to homepage
   res.redirect("/");
 });
 
-function queryExperiences(req) {
+// parameters: city and state of the zipcode the user inputted
+function queryExperiences(theCity, theState) {
   // return a Promise; it will wait for .then to get resolved before returning
   return new Promise((resolve, reject) => {
     dbRef.child("experiences").get().then((snapshot) => {
@@ -237,6 +238,7 @@ function queryExperiences(req) {
         var sameCityAndStateCounter = 0;
         var experiencesWithSameCityAndState = {};
   
+        // experiences from other users: same state but not same city
         var sameStateCounter = 0;
         var experiencesWithSameState = {};
   
@@ -246,14 +248,11 @@ function queryExperiences(req) {
         // loop through each user (represented by userID) in snapValue
         for (user in snapValue) {
           // if the inputted city and state matches with a city and state in the database
-          if (req.body.city == snapValue[user].city && req.body.state == snapValue[user].state) {
+          if (theCity == snapValue[user].city && theState == snapValue[user].state) {
             experiencesWithSameCityAndState[sameCityAndStateCounter] = snapValue[user]; 
             sameCityAndStateCounter++;
-            continue;
-          }
-  
-          // if the inputted state matches with a state in the database (and city doesn't match)
-          if (req.body.state == snapValue[user].state) {
+          } else if (theState == snapValue[user].state) {
+            // if the inputted state matches with a state in the database (and city doesn't match)
             experiencesWithSameState[sameStateCounter] = snapValue[user]; 
             sameStateCounter++;
           }
@@ -271,74 +270,64 @@ function queryExperiences(req) {
   });
 }
 
-function queryStates(theState) {
+// on success, returns country, state, and city
+function queryZiptasticAPI(zipCode) {
   return new Promise((resolve, reject) => {
-    // send the plans in the user's state
-    dbRef.child("states").child(theState).get().then((snapshot) => {
-      if (snapshot.exists()) {
-        return resolve(snapshot.val());
-      } else {
-        return reject(false);
-      }
-    }).catch((error) => {
-      return reject(false);
-    });
+    axios.get(`http://ZiptasticAPI.com/${zipCode}`)
+      .then((res) => {
+        var stateAndCity = res.data;
+
+        // put city in proper case (each word's first letter capitalized)
+        var city = stateAndCity.city;
+        city = city.toLowerCase();
+        var arrayOfWords = city.split(" ");
+        for (var i = 0; i < arrayOfWords.length; i++) {
+            arrayOfWords[i] = arrayOfWords[i][0].toUpperCase() + arrayOfWords[i].substr(1);
+        }
+        city = arrayOfWords.join(" ");
+        stateAndCity.city = city;
+        
+        // put state in long form (not two letters)
+        var state = stateLongName[stateAndCity.state];
+        stateAndCity.state = state;
+
+        resolve(stateAndCity);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 
 // when findIdealPlan.ejs's form is submitted, goes to this route
 app.post("/findIdealPlan", (req, res) => {
-  var toBeSent = {};
+  // make call to queryZiptasticAPI function to get city and state
+  var zipTasticObject = 
+    queryZiptasticAPI(req.body.zipCode)
+      .then((responseFromQueryZiptasticAPI) => {
+        return responseFromQueryZiptasticAPI;
+      })
+      .catch((errorFromQueryZiptasticAPI) => {
+        console.log(errorFromQueryZiptasticAPI);
+      });
 
-  // send two things: experiences from other users & state plans 
-  queryExperiences(req)
-    .then(responseFromQueryExperiences => {
-      toBeSent["fromExperiences"] = responseFromQueryExperiences;
-      queryStates(req.body.state)
-      .then(responseFromQueryStates => {
-        toBeSent["fromStates"] = responseFromQueryStates;
-      })
-      .catch(responseFromQueryStates => {
-        // error; likely, that state isn't in the database
-        toBeSent["fromStates"] = false;
-      })
-      .then(() => {
-        res.send(toBeSent);
-      })
+  zipTasticObject
+    .then(stateAndCity => {
+      queryExperiences(stateAndCity.city, stateAndCity.state) // gets experiences based on city and state
+        .then(responseFromQueryExperiences => {
+          // send city, state, and the experiences to findIdealPlan.ejs for the user to view
+          res.send({
+            "city": stateAndCity.city, 
+            "state": stateAndCity.state, 
+            "queryExperiences": responseFromQueryExperiences
+          });
+        })
+        .catch(errorFromQueryExperiences => {
+          console.log(errorFromQueryExperiences);
+        })
     })
-    .catch((err) => {
-      // in case of error
-      console.log(err);
-    });
-});
-
-// Get Cities Based on State Name
-app.post("/getStateCities", (req, res) => {
-  const URL = `https://www.universal-tutorial.com/api/cities/${req.body.stateName}`;
-  
-  let universalTutorialConfig = { 
-    headers: { 
-      'Accept': 'application/json',
-      'Authorization': process.env.authToken
-    } 
-  }
-
-  var JSONObject = {
-    "cities": []
-  };
-
-  // make axios GET request
-  axios.get(URL, universalTutorialConfig)
-  .then(response => {
-      response = response.data;
-      for (i = 0; i < response.length; i++) {
-        JSONObject["cities"].push(response[i].city_name);
-      }
-
-      res.send(JSONObject);
-    })
-  .catch((error) => {
-      console.log(error);
+    .catch((errorFromZipTasticObject) => {
+      console.log(errorFromZipTasticObject);
     });
 });
 
