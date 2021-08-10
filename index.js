@@ -176,6 +176,7 @@ app.get("/states/:stateName", (req, res) => {
     .then((responseFromExperiencesInState) => {
       res.render("pages/statePage", {
         state: stateName,
+        stateAsLowerCase: stateName.toLowerCase(),
         longStateNames: longStateNames,
         pageName: "state",
         responseFromExperiencesInState: responseFromExperiencesInState
