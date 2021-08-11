@@ -329,7 +329,7 @@ function queryExperiences(theCity, theState) {
 function queryZiptasticAPI(zipCode) {
   return new Promise((resolve, reject) => {
     axios.get(`http://ZiptasticAPI.com/${zipCode}`)
-      .then((res) => {
+      .then(res => {
         var stateAndCity = res.data;
 
         // if zip code is found (no error key/value pair)
