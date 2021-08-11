@@ -11,15 +11,11 @@ footer {
 }
 
 form {
-  margin-left: 20px;
+  margin: 0 20px;
 }
 
 form h4 {
   margin-top: 10px;
-}
-
-.form-control, .form-select {
-  width: 12.5%;
 }
 
 #prevSurgeries, #surgeryNeeded {
