@@ -296,7 +296,7 @@
 
       function returnMarketplaceData(theData, theState) {
         var theHTML = `<div class="table-responsive aTable" style="margin-top: 50px;">
-          <table class="table table-hover caption-top wideTable">
+          <table id="marketplaceTable" class="table table-hover caption-top wideTable">
             <caption>Publicly Available Data on Plans in ${theState} (Marketplace API Data):</caption>
             <thead>
               <tr>
@@ -381,36 +381,44 @@
           url: "/findIdealPlan",
           type: 'post',
           data: $('#findPlanForm').serialize()
-        }).done(response => {
+        }).done(responseFromFindIdealPlan => {
           // show them the data in result div based on their responses
-          if (response) {
-            $("#result").html(returnFromExperiences(response.city, response.state, response.queryExperiences));
+          if (responseFromFindIdealPlan) {
+            $("#result").html(returnFromExperiences(responseFromFindIdealPlan.city, responseFromFindIdealPlan.state, responseFromFindIdealPlan.queryExperiences));
+
+            // execute second ajaxRequest
+            var secondAjaxRequest = $.ajax({
+              url: "/marketplaceapi",
+              type: 'post',
+              data: $('#findPlanForm').serialize()
+            }).done(responseFromMarketPlaceAPI => {
+              // append public API data
+              if (responseFromMarketPlaceAPI) {
+                // .append() in order to add to result div
+                $("#result").append(returnMarketplaceData(responseFromMarketPlaceAPI.apiData, responseFromMarketPlaceAPI.state));
+              } else {
+                // error in response
+                console.log("Error in Response!");
+              }
+            }).fail(() => {
+              console.log("Error in Retrieving Data from Marketplace API.");
+            }).then(() => {
+              // initialize the marketplace table using DataTable
+              $("#marketplaceTable").DataTable({
+                "scrollX": true
+              });
+            });
           } else {
             // error in response
             console.log("Error in Response!");
           }
         }).fail(() => {
           $("#result").html("<h1>Error! Did you Enter Your Information Correctly?</h1>");
-        });
-      });
-
-      // separate block of code for getting Marketplace API data
-      $("#findPlanForm").submit(function(event) {
-        var ajaxRequest = $.ajax({
-          url: "/marketplaceapi",
-          type: 'post',
-          data: $('#findPlanForm').serialize()
-        }).done(response => {
-          // append public API data
-          if (response) {
-            // .append() in order to add to result div
-            $("#result").append(returnMarketplaceData(response.apiData, response.state));
-          } else {
-            // error in response
-            console.log("Error in Response!");
-          }
-        }).fail(() => {
-          console.log("Something went wrong!");
+        }).then(() => {
+          // initialize the first two tables using DataTable
+          $(".wideTable").DataTable({
+            "scrollX": true
+          });
         });
       });
     </script>
