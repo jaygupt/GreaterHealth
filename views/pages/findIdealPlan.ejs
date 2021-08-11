@@ -147,6 +147,7 @@
             <tr>
               <th scope="col"></th>
               <th scope="col">Age</th>
+              <th scope="col">Income</th>
               <th scope="col">History of Tobacco Use or Smoking</th>
               <th scope="col">Previous Surgeries</th>
               <th scope="col">Out of Pocket Cost After Insurance</th>
@@ -168,6 +169,18 @@
             <tr>
               <th scope="row">${sameCityAndStateCounter}</th>
               <td>${sameCityAndState[key].age}</td>
+              <td>
+            `;
+          
+          // if income is present, display it. Else, display "N/A"
+          if (sameCityAndState[key].income) {
+            theHTML += `${sameCityAndState[key].income}`;
+          } else {
+            theHTML += `N/A`;
+          }
+
+          theHTML += `
+              </td>
               <td>${sameCityAndState[key].hotuos}</td>
               <td>`;
           
@@ -216,6 +229,7 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col">Age</th>
+                <th scope="col">Income</th>
                 <th scope="col">City of Residence</th>
                 <th scope="col">History of Tobacco Use or Smoking</th>
                 <th scope="col">Previous Surgeries</th>
@@ -238,6 +252,17 @@
             <tr>
               <th scope="row">${sameStateCounter}</th>
               <td>${sameState[key].age}</td>
+              <td>`;
+
+          // if income is present, display it. Else, display "N/A"
+          if (sameState[key].income) {
+            theHTML += `${sameState[key].income}`;
+          } else {
+            theHTML += `N/A`;
+          }
+
+          theHTML += `
+              </td>
               <td>${sameState[key].city}</td>
               <td>${sameState[key].hotuos}</td>
               <td>`;
