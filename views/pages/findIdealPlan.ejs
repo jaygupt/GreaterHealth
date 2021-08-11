@@ -29,7 +29,13 @@
 
       <div class="form-group">
         <label for="dob">Date of Birth:</label>
-        <input class="form-control" type="date" id="dob" name="dob" required>
+        <input 
+          class="form-control" 
+          type="date" 
+          id="dob" 
+          name="dob" 
+          value="1990-01-01" 
+          required>
       </div>
 
       <fieldset class="form-group">
@@ -129,7 +135,10 @@
 
         $("#male").click(() => {
           $("#isFemale").hide();
-        })
+        });
+
+        // restrict date of birth to any day before today
+        $("#dob").attr("max", new Date().toISOString().slice(0, -14));
       });
 
       function returnFromExperiences(theCity, theState, fromExperiences) {
