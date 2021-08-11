@@ -152,7 +152,7 @@
 
         var theHTML = `<div class="table-responsive aTable" style="margin-top: 50px;">
           <h2>Health Insurance Experiences in ${theCity}, ${theState}</h2>
-          <table class="table table-hover caption-top wideTable">
+          <table class="table table-hover wideTable">
           <thead>
             <tr>
               <th scope="col"></th>
@@ -221,7 +221,7 @@
         // experiences in all other cities in same state
         theHTML += `<div class="table-responsive aTable" style="margin-top: 50px;">
           <h2>Health Insurance Experiences in Other Cities in ${theState}</h2>
-          <table class="table table-hover caption-top wideTable">
+          <table class="table table-hover wideTable">
             <thead>
               <tr>
                 <th scope="col"></th>
@@ -297,7 +297,7 @@
       function returnMarketplaceData(theData, theState) {
         var theHTML = `<div class="table-responsive aTable" style="margin-top: 50px;">
           <h2>Publicly Available Data on Plans in ${theState} (Marketplace API Data)</h2>
-          <table id="marketplaceTable" class="table table-hover caption-top wideTable">
+          <table id="marketplaceTable" class="table table-hover wideTable">
             <thead>
               <tr>
                 <th scope="col"></th>
@@ -338,8 +338,8 @@
               
           theHTML += `
               </td>
-              <td><a href="${arrayOfPlans[key].benefits_url}">Benefits</a></td>
-              <td><a href="${arrayOfPlans[key].brochure_url}">Brochure</a></td>
+              <td><a href="${arrayOfPlans[key].benefits_url}" target="_blank">Benefits</a></td>
+              <td><a href="${arrayOfPlans[key].brochure_url}" target="_blank">Brochure</a></td>
               <td>${arrayOfPlans[key].deductibles[0].type}</td>
               <td>${arrayOfPlans[key].deductibles[0].amount}</td>
               <td>`;
