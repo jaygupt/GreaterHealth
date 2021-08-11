@@ -79,6 +79,7 @@
           <th scope="col"></th>
           <th scope="col">Age</th>
           <th scope="col">City of Residence</th>
+          <th scope="col">Income</th>
           <th scope="col">History of Tobacco Use or Smoking</th>
           <th scope="col">Previous Surgeries</th>
           <th scope="col">Out of Pocket Cost After Insurance</th>
@@ -98,6 +99,14 @@
             <th scope="row"><%= (parseInt(key) + 1) %></th>
             <td><%= responseFromExperiencesInState[key].age %></td>
             <td><%= responseFromExperiencesInState[key].city %></td>
+            <td>
+            <% var userIncome = responseFromExperiencesInState[key].income; %>
+            <% if (userIncome) { %>
+              <%= userIncome %>
+            <% } else { %>
+              N/A
+            <% } %>
+            </td>
             <td><%= responseFromExperiencesInState[key].hotuos %></td>
             <td>
             <% if (Array.isArray(responseFromExperiencesInState[key].prevSurgeries)) { %>

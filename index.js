@@ -200,11 +200,16 @@ function writeUserDataToExperiences(userData) {
     userData.iofn = "";
   }
 
+  if (!userData.prevSurgeries) {
+    userData.prevSurgeries = "";
+  }
+
   // add a dollar sign in front of monetary inputs
   userData.oopCost = "$" + userData.oopCost;
   userData.premium = "$" + userData.premium;
   userData.deductible = "$" + userData.deductible;
   userData.copay = "$" + userData.copay;
+  userData.income = "$" + userData.income;
 
   // go through each key-value pair in userData
   for (key in userData) {
