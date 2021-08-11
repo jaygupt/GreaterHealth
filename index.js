@@ -27,8 +27,6 @@ app.use("/js", express.static(path.join(__dirname, "public/js")));
 app.use("/bootstrapCSS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/bootstrapJS", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/jQuery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
-app.use("/tabulatorCSS", express.static(path.join(__dirname, "node_modules/tabulator-tables/dist/css")));
-app.use("/tabulatorJS", express.static(path.join(__dirname, "node_modules/tabulator-tables/dist/js")))
 app.use(express.urlencoded({extended: true})); // for parsing data
 
 // set up views folder
