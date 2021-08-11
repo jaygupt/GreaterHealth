@@ -151,8 +151,8 @@
         var sameState = fromExperiences.experiencesWithSameState;
 
         var theHTML = `<div class="table-responsive aTable" style="margin-top: 50px;">
+          <h2>Health Insurance Experiences in ${theCity}, ${theState}</h2>
           <table class="table table-hover caption-top wideTable">
-          <caption>Health Insurance Experiences in ${theCity}, ${theState}:</caption>
           <thead>
             <tr>
               <th scope="col"></th>
@@ -220,8 +220,8 @@
 
         // experiences in all other cities in same state
         theHTML += `<div class="table-responsive aTable" style="margin-top: 50px;">
+          <h2>Health Insurance Experiences in Other Cities in ${theState}</h2>
           <table class="table table-hover caption-top wideTable">
-            <caption>Health Insurance Experiences in Other Cities in ${theState}:</caption>
             <thead>
               <tr>
                 <th scope="col"></th>
@@ -296,8 +296,8 @@
 
       function returnMarketplaceData(theData, theState) {
         var theHTML = `<div class="table-responsive aTable" style="margin-top: 50px;">
+          <h2>Publicly Available Data on Plans in ${theState} (Marketplace API Data)</h2>
           <table id="marketplaceTable" class="table table-hover caption-top wideTable">
-            <caption>Publicly Available Data on Plans in ${theState} (Marketplace API Data):</caption>
             <thead>
               <tr>
                 <th scope="col"></th>
