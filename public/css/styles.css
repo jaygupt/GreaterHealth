@@ -53,15 +53,21 @@ nav {
 }
 
 .aTable {
-  width: 95%;
+  width: 98%;
   margin: 20px auto;
 }
 
 table caption {
+  padding-top: 0;
   font-size: 2rem;
 }
 
 .dropdown-menu {
   max-height: 280px;
   overflow-y: auto;
+}
+
+#DataTables_Table_0_filter label {
+  padding-right: 20px;
+  padding-top: 10px;
 }

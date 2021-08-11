@@ -8,6 +8,14 @@
 <script>
   // Enable Dropdowns
   $(document).ready(function(){
-    $('.dropdown-toggle').dropdown()
+    // enables Bootstrap dropdown menu functionality
+    $(".dropdown-toggle").dropdown();
+
+    $(".nonWideTable").DataTable();
+
+    // if the table is wide, enable scrollX option
+    $(".wideTable").DataTable({
+      "scrollX": true
+    });
   });
 </script>
