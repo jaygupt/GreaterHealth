@@ -13,17 +13,7 @@
     <form id="findPlanForm">
       <%- include('../partials/zipCodeInput'); %>
 
-      <div class="form-group">
-        <label for="income">Income:</label>
-        <input 
-          class="form-control"
-          id="income" 
-          name="income" 
-          type="number" 
-          step="0.01" 
-          placeholder="0.00" 
-          required>
-      </div>
+      <%- include('../partials/incomeInput'); %>
 
       <fieldset class="form-group">
         <label for="aptc_eligible">Are you APTC Eligible?</label>

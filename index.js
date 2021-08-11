@@ -245,6 +245,7 @@ function writeUserDataToExperiences(userData) {
             age: userData.age,
             city: personCityAndState.city,
             state: personCityAndState.state,
+            income: userData.income,
             hotuos: userData.hotuos,
             prevSurgeries: userData.prevSurgeries,
             oopCost: userData.oopCost,
