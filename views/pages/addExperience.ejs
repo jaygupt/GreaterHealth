@@ -81,7 +81,7 @@
         <input class="form-control" type="number" id="copay" name="copay" step=".01" placeholder="25">
       </div>
 
-      <button class="btn btn-success" type="submit">Submit!</button>
+      <%- include('../partials/formSubmitButton', {buttonText: "Add my Experience!"}); %>
     </form>
     
     <%- include('../partials/footer'); %>
