@@ -1,5 +1,7 @@
 # GreaterHealth
 
+Website Link: https://greaterhealthapp.herokuapp.com/
+
 To Run the Project On Your Computer for the First Time:
 1. git clone https://github.com/{GITHUB_USERNAME}/GreaterHealth.git to clone the repo to your local machine.
 2. In the terminal of the project directory, run `npm i` to install project dependencies.
